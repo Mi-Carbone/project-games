@@ -10,9 +10,6 @@ function AuthPage() {
   const [user, setUser] = useState({
     name: null,
     email: null,
-    logged: false,
-    turn: 0,
-    score: 0,
   });
   const [error, setError] = useState("");
   const [userLogged, setUserLogged] = useState(false);
@@ -60,11 +57,11 @@ function AuthPage() {
           name: details.name,
           email: details.email,
           password: details.password,
-          logged: true,
-          turn: 0,
-          score: 0,
+
         });
         localStorage.setItem("user", JSON.stringify(details));
+      }else{
+        setError('I dati inseriti non sono corretti')
       }
     });
   };

@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 
 function Contacts() {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem("list")));
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem("user")));
   const [counter, setCounter] = useState(0);
   const [listItems, setListItems] = useState([]);
 
   const handleClick = () => {
     setCounter(counter + 1);
-    const myNewItem = { id: counter, checked: false, items };
-    const listItems = [myNewItem];
-    // listItems.push({score:items})
-    console.log(listItems, "pa");
-    setListItems(listItems);
+    console.log(items, 'array salvati');
+    const myNewItems = [];
+    // const myNewItems = items.score;
+    myNewItems.push({id:counter,score:items.score})
+    console.log('nuovo array', myNewItems);
+    
+    // // listItems.push({score:items})
+    // console.log(listItems, "pa");
+    setListItems(myNewItems);
   };
-  console.log("passaggio local", items);
+  console.log("passaggio local", items.score);
   console.log("pass Araay", listItems);
   return (
     <>
@@ -22,10 +26,8 @@ function Contacts() {
         <button onClick={handleClick}>Aggiorna Punteggio</button>
         {listItems.map((listItem) => (
           <li className="item" key={listItem.id}>
-            <label
-              style={listItem.checked ? { textDecoration: "line-through" } : null}
-            >
-              {listItem.items}
+            <label>
+              {listItem.score}
             </label>
           </li>
         ))}
@@ -37,6 +39,14 @@ function Contacts() {
 export default Contacts;
 
 
+
+{/**
+ /*
+  const id = items.length ? items[items.length - 1].id + 1 : 1;
+    const myNewItem = { id, checked: false, item };
+    const listItems = [...items, myNewItem];
+    setAndSaveItems(listItems);
+ */}
 
 
 

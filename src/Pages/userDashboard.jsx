@@ -179,3 +179,90 @@
 // //     setScore(myNewItem)
 // //   }
 // // }, [gameOver]);
+
+
+
+
+
+
+
+
+
+// if (counter === cardImages.length) {
+//   // setScore({ ...score, id: startGame, turn: turns });
+//   setGameOver(true);
+//   setItems(turns);
+//   const myNewItem = { id: counterId, score:turns };
+
+//   console.log('fine partita');
+//   setScore(myNewItem)
+// }
+// const [counterId, setCounterId] = useState(0);
+// useEffect(() => {
+//   setCounterId(counterId + 1);
+//   const myNewItem = { id: counterId, score:turns };
+//   if (!gameOver) {
+//     console.log("fine partita");
+//     setScore(myNewItem)
+//   }
+// }, [gameOver]);
+
+
+ // const newRecordWinner = () => {
+  //   setScore(score + 1);
+  //   var existing = localStorage.getItem("user");
+
+  //   // If no existing data, create an array
+  //   // Otherwise, convert the localStorage string to an array
+  //   existing = existing ? JSON.parse(existing) : {};
+
+  //   // Add new data to localStorage Array
+  //   existing["score"] = { id: score, score: turns };
+
+  //   // Save back to localStorage
+  //   localStorage.setItem("user", JSON.stringify(existing));
+  // };
+
+  // const addItem = (item) => {
+  //   console.log("item", item);
+  //   const id = items.length ? items[items.length - 1].id + 1 : 1;
+  //   const myNewItem = { id, checked: false, item };
+  //   const listItems = [...items, myNewItem];
+  //   setItems(listItems);
+  //   localStorage.setItem("user", JSON.stringify(listItems));
+  // };
+  // const addScore = () => {
+
+  //   var existing = localStorage.getItem("user");
+
+  //   console.log(score, 'score');
+  //   // If no existing data, create an array
+  //   // Otherwise, convert the localStorage string to an array
+  //   existing = existing ? JSON.parse(existing) : {};
+
+  //   // Add new data to localStorage Array
+  //   existing['id'] = score;
+  //   existing["score"] = turns;
+
+  //   // Save back to localStorage
+  //   localStorage.setItem("user", JSON.stringify(existing));
+
+  //   {
+  //    console.log('evento' , e);
+  //   setScore(score + 1);
+  //   const myNewItems = [];
+  //   myNewItems.push({id:score, score:turns})
+  //   console.log('nuovo record', myNewItems);
+  //   var existing = localStorage.getItem("user");
+
+  //   // If no existing data, create an array
+  //   // Otherwise, convert the localStorage string to an array
+  //   existing = existing ? JSON.parse(existing) : {};
+
+  //   // Add new data to localStorage Array
+  //   existing['score'] = myNewItems;
+
+  //   // Save back to localStorage
+  //   localStorage.setItem("user", JSON.stringify(existing));
+  //   }
+  // };

@@ -4,9 +4,8 @@ function LoginForm({ Login, error }) {
   const [details, setDetails] = useState({
     name: '',
     email: '',
-    logged: false,
-    turn: 0,
-    score: 0,
+    password:''
+    
   });
 
   const submitHandler = (e) => {

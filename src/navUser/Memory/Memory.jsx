@@ -15,12 +15,12 @@ import { RoutesLogin } from "../../Routes/index";
 const cardImages = [
   { src: "/img/anime7-1.png", matched: false },
   { src: "/img/anime-1.png", matched: false },
-  // { src: "/img/anime2-1.png", matched: false },
-  // { src: "/img/anime3-1.png", matched: false },
-  // { src: "/img/anime5-1.png", matched: false },
-  // { src: "/img/anime6-1.png", matched: false },
-  // { src: "/img/anime4-1.png", matched: false },
-  // { src: "/img/gloves-1.png", matched: false },
+  { src: "/img/anime2-1.png", matched: false },
+  { src: "/img/anime3-1.png", matched: false },
+  { src: "/img/anime5-1.png", matched: false },
+  { src: "/img/anime6-1.png", matched: false },
+  { src: "/img/anime4-1.png", matched: false },
+  { src: "/img/gloves-1.png", matched: false },
 ];
 
 function Memory() {
@@ -31,9 +31,7 @@ function Memory() {
   const [disabled, setDisabled] = useState(false);
   const [counter, setCounter] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem("user")));
-  const [score, setScore] = useState([{ id: "", score: "" }]);
-
+  const [idScore, setIdScore] = useState(0);
   const navigate = useNavigate();
 
   //shuffleCards cards
@@ -50,17 +48,12 @@ function Memory() {
     setCards(shuffleCards); //al click mi deve generare l array
     setTurns(0);
     setGameOver(false);
-    
-    setCounterId(counterId + 1);
-    console.log(gameOver, 'controllo reset');
   };
 
   // handleChoise prende l argomento card per verificare
   const handleChoice = (card) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
-
-  const [counterId, setCounterId] = useState(0);
   //Comparazione delle due scelte fatte
   useEffect(() => {
     if (choiceOne && choiceTwo) {
@@ -86,13 +79,40 @@ function Memory() {
     }
     if (counter === cardImages.length) {
       setGameOver(true);
-      addScore(turns)
+      newRecord();
       setTimeout(() => window.location.reload(), 5000);
     }
   }, [choiceOne, choiceTwo]);
 
+  const newRecord = () => {
+    setIdScore(idScore + 1);
+    // let date = new Date()
+    let dates = new Date();
+    let date = `${dates.getDay()}/${dates.getMonth()}/${dates.getFullYear()},  ${dates.getHours()}:${dates.getMinutes()}`;
 
-  console.log("turni ", turns);
+    /**
+     * Aggiornare un elemento in localStorage
+     * prendo il localStorage e lo inserisco in una variabile
+     * inizializzo la variabile pke se esiste gia la variabile deve prendermi quella se non esiste mi devi creare un oggetto
+     * pushare immediatamente all interno della array creato comporta una rottura pke non è stato ancora creato un array
+     * Effettuare prima una verifica della dell'esistenza dell'array e associarla un array vuoto
+     * dopo dichè possiamo pushare all interno della array vuoto i nostri valori
+     */
+
+    var existing = localStorage.getItem("user");
+    existing = existing ? JSON.parse(existing) : {};
+
+    //controllo Array
+    if (!existing.scores) {
+      existing.scores = [];
+    }
+    //push elementi
+    existing.scores.push({
+      date: date,
+      newScore: turns,
+    });
+    localStorage.setItem("user", JSON.stringify(existing));
+  };
 
   // Azzero le scelte e incremento di uno per passare alla selezione sucessiva
   const resetTurn = () => {
@@ -106,18 +126,6 @@ function Memory() {
   useEffect(() => {
     shuffleCards();
   }, []);
-
-  const addScore = () => {
-    setItems({
-      turn: turns,
-    });
-    localStorage.setItem("user", JSON.stringify(turns));
-
-    console.log("fine partita");
-    console.log("fine partita turni", turns);
-    
-  };
-
 
   return (
     <div className="memory">
@@ -153,22 +161,3 @@ function Memory() {
 }
 
 export default Memory;
-
-// if (counter === cardImages.length) {
-//   // setScore({ ...score, id: startGame, turn: turns });
-//   setGameOver(true);
-//   setItems(turns);
-//   const myNewItem = { id: counterId, score:turns };
-
-//   console.log('fine partita');
-//   setScore(myNewItem)
-// }
-// const [counterId, setCounterId] = useState(0);
-// useEffect(() => {
-//   setCounterId(counterId + 1);
-//   const myNewItem = { id: counterId, score:turns };
-//   if (!gameOver) {
-//     console.log("fine partita");
-//     setScore(myNewItem)
-//   }
-// }, [gameOver]);
