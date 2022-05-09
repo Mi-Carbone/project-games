@@ -1,0 +1,52 @@
+
+
+.memory {
+  max-width: 1000%;
+  height: 200vh;
+  margin: 0px auto;
+  padding: 30px 60px;
+  font-family: Raleway, sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  background: #1b1523;
+  /* background-image: url(""); */
+  color: #fff;
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+button {
+  background: none;
+  border: 2px solid #fff;
+  margin-top: 20px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1em;
+}
+button:hover {
+  background: #c23866;
+  color: #fff;
+}
+
+.card-grid {
+  margin-top: 40px;
+  display: inline-grid;
+  grid-template-columns: 250px 250px 250px 250px;
+  grid-gap: 40px;
+}
+
+p {
+  margin: 60px;
+  padding: 60px;
+}

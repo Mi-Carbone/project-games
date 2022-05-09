@@ -1,0 +1,32 @@
+{
+    "logins":[
+        { 
+            "id": 1,
+            "userName": "Mario",
+            "password": "mario", 
+            "email": "mario.rossi@gmail.com",
+            "logged": false,
+          "turn": 0,
+          "score": 0
+        },
+    
+        {
+            "id": 2,
+            "userName": "Carlo",
+            "password": "carlo", 
+            "email": "carlo.rossi@gmail.com",
+            "logged": false,
+          "turn": 0,
+          "score": 0 
+        },
+        { 
+            "id": 3, 
+            "userName": "Giovanni",
+            "password": "giovanni", 
+            "email": "giovanni.rossi@gmail.com",
+            "logged": false,
+          "turn": 0,
+          "score": 0 
+        }
+    ]
+}
