@@ -65,17 +65,6 @@ function AuthPage() {
       }
     });
   };
-
-  //   useEffect(()=>{
-
-  //     //   let checked = localStorage.setItem("user", JSON.stringify(user));
-  //     //   if (!userLogged) {
-  //     //       setUser(checked)
-  //     //   }
-  //   },[])
-  //   const storeUser = (user)=>{
-  // console.log(user,'utente');
-  //   }
   const onClick = () => {
     navigate(RoutesLogin.choice);
     window.location.reload();

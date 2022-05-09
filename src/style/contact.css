@@ -1,0 +1,19 @@
+.contanct, .contact-element{
+    margin: 30px;
+    padding: 30px;
+}
+
+.contact-button{
+    background-color: rgb(44, 71, 208);
+    color: aliceblue;
+    margin: 20px;
+}
+
+
+.contact-element{
+    margin: 0px 0px;
+    padding: 0px 0px;
+}
+.contact-element span{
+    padding: 20px;
+}

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../style/contact.css";
+
 
 function Contacts() {
   const [items, setItems] = useState(JSON.parse(localStorage.getItem("user")));
@@ -6,30 +8,35 @@ function Contacts() {
   const [listItems, setListItems] = useState([]);
 
   const handleClick = () => {
-    setCounter(counter + 1);
     console.log(items, 'array salvati');
     const myNewItems = [];
     // const myNewItems = items.score;
-    myNewItems.push({id:counter,score:items.score})
+    myNewItems.push(items.scores)
     console.log('nuovo array', myNewItems);
     
     // // listItems.push({score:items})
     // console.log(listItems, "pa");
     setListItems(myNewItems);
   };
-  console.log("passaggio local", items.score);
   console.log("pass Araay", listItems);
+  console.log("pass Araay date", listItems.date);
   return (
     <>
-      <div>
+      <div className="contact">
         <h1>Contacts</h1>
-        <button onClick={handleClick}>Aggiorna Punteggio</button>
-        {listItems.map((listItem) => (
-          <li className="item" key={listItem.id}>
-            <label>
-              {listItem.score}
-            </label>
-          </li>
+        <button className="contact-button" onClick={handleClick}>Aggiorna Punteggio</button>
+        {listItems.map((date, i) =>(
+          <ul className="contact-table" key={"data_"+i}>
+            {date.map((newScore, j)=>(
+              <li className="contact-element" key={"score_" + j}>
+                Data: {newScore.date}
+                <span>Punteggio: {newScore.newScore}</span>
+                
+              </li>
+              
+            ))}
+          </ul>
+          
         ))}
       </div>
     </>

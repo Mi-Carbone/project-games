@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import SingleCard from "./componentsCard/singleCard";
 import "../../style/memory/memory.css";
-import { Link, useNavigate } from "react-router-dom";
-import { RoutesLogin } from "../../Routes/index";
+import { useNavigate } from "react-router-dom";
 
 // PLUS
 // conteggio numero turno (ok),
@@ -15,12 +14,12 @@ import { RoutesLogin } from "../../Routes/index";
 const cardImages = [
   { src: "/img/anime7-1.png", matched: false },
   { src: "/img/anime-1.png", matched: false },
-  { src: "/img/anime2-1.png", matched: false },
-  { src: "/img/anime3-1.png", matched: false },
-  { src: "/img/anime5-1.png", matched: false },
-  { src: "/img/anime6-1.png", matched: false },
-  { src: "/img/anime4-1.png", matched: false },
-  { src: "/img/gloves-1.png", matched: false },
+  // { src: "/img/anime2-1.png", matched: false },
+  // { src: "/img/anime3-1.png", matched: false },
+  // { src: "/img/anime5-1.png", matched: false },
+  // { src: "/img/anime6-1.png", matched: false },
+  // { src: "/img/anime4-1.png", matched: false },
+  // { src: "/img/gloves-1.png", matched: false },
 ];
 
 function Memory() {
