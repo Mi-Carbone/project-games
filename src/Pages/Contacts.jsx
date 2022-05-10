@@ -1,42 +1,72 @@
 import React, { useState } from "react";
 import "../style/contact.css";
 
-
 function Contacts() {
   const [items, setItems] = useState(JSON.parse(localStorage.getItem("user")));
-  const [counter, setCounter] = useState(0);
+  const [message, setMessage] = useState();
   const [listItems, setListItems] = useState([]);
+  const [listItemsMine, setListItemsMine] = useState([]);
 
   const handleClick = () => {
-    console.log(items, 'array salvati');
+    //console.log(items, "array salvati");
     const myNewItems = [];
-    // const myNewItems = items.score;
-    myNewItems.push(items.scores)
-    console.log('nuovo array', myNewItems);
-    
-    // // listItems.push({score:items})
-    // console.log(listItems, "pa");
+    if (items.scoresMemory) {
+      myNewItems.push(items.scoresMemory);
+    //console.log("nuovo array", myNewItems);
     setListItems(myNewItems);
+    }else{
+      setMessage('Non ci sono dati salvati')
+    }
+    
   };
-  console.log("pass Araay", listItems);
-  console.log("pass Araay date", listItems.date);
+
+
+
+  const handleClickMine = () => {
+    const myNewItemsMine = [];
+    if (items.scoreMine) {
+      myNewItemsMine.push(items.scoreMine);
+    console.log("nuovo array", myNewItemsMine);
+    setListItemsMine(myNewItemsMine);
+    }else{
+      setMessage('Non ci sono dati salvati')
+    }
+    
+  };
   return (
     <>
       <div className="contact">
-        <h1>Contacts</h1>
-        <button className="contact-button" onClick={handleClick}>Aggiorna Punteggio</button>
-        {listItems.map((date, i) =>(
-          <ul className="contact-table" key={"data_"+i}>
-            {date.map((newScore, j)=>(
+        <h1>Punteggio Memory</h1>
+        <button className="contact-button" onClick={handleClick}>
+          Aggiorna Punteggio
+        </button>
+        <h3>{message}</h3>
+        {listItems.map((date, i) => (
+          <ul className="contact-table" key={"data_" + i}>
+            {date.map((newScore, j) => (
               <li className="contact-element" key={"score_" + j}>
                 Data: {newScore.date}
                 <span>Punteggio: {newScore.newScore}</span>
-                
               </li>
-              
             ))}
           </ul>
-          
+        ))}
+      </div>
+      <div className="contact">
+        <h1>Punteggio Campo Minato</h1>
+        <button className="contact-button" onClick={handleClickMine}>
+          Aggiorna Punteggio
+        </button>
+        <h3>{message}</h3>
+        {listItemsMine.map((date,i) => (
+          <ul className="contact-table" key={"data_" + i}>
+            {date.map((newScore, s) => (
+              <li className="contact-element" key={"score_" + s}>
+                Data: {newScore.date}
+                <span>Numero colonne e righe: {newScore.newScore}</span> 
+              </li>
+            ))}
+          </ul>
         ))}
       </div>
     </>
@@ -47,65 +77,55 @@ export default Contacts;
 
 
 
-{/**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+  /**
  /*
   const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
     setAndSaveItems(listItems);
- */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ */
+}
 
 // if (!gameOver) {
 //   score.push({score:turns})

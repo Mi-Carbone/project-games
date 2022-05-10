@@ -1,13 +1,14 @@
-import React from "react";
+import React,{useState} from "react";
 import "../../style/minfield/grid.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from "./buttonCells";
 
 const Grid = (props) => {
-  // console.log('Grid props',props);
+
 
   const rowst = props.value;
 
+  const totalNumberCellsWinner = (rowst * rowst) - rowst;
   const cells = [];
 
   //creazione matrice
@@ -74,7 +75,29 @@ const Grid = (props) => {
       myArra.value = counter;
     }
   }
+
+
+
+  // console.log("button props", props);
   
+
+  // const handleClick = (value) => {
+  //   const winnerCells = props.winnerCells
+  //   const totalNumberCellsWinner = props.totalNumberCellsWinner;
+  //   console.log(totalNumberCellsWinner, 'numero celle');
+  //   if (value === -1) {
+  //     setCell("💣");
+  //     props.handleGameOver();
+  //     //voglio terminare il gioco
+  //   } else {
+  //     setCell(value);
+  //     winnerCells.push(cell)
+  //     if (winnerCells.length == totalNumberCellsWinner) {
+  //       console.log('vittoria');
+  //     }
+  //   }
+  // };
+  console.log(cells);
   return (
     <>
       <div className="container row mt-4 pb-4 ml-5 mx-5">
@@ -86,7 +109,12 @@ const Grid = (props) => {
                 <Button 
                 value={element.value} 
                 bomb={element.bomb}
-                handleGameOver={props.handleGameOver}/>
+                handleGameOver={props.handleGameOver}
+                winnerCells={props.winnerCells}
+                totalNumberCellsWinner={totalNumberCellsWinner}
+                handleWinner={props.handleWinner}
+                winner={props.winner}
+                />
               </div>
             ))}
           </div>

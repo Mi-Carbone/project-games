@@ -24,9 +24,6 @@ function ChoiceGame() {
                     Memory
                   </Link>
                 </button>
-                <div>
-                  Il tuo punteggio
-                </div>
               </li>
               <li>
                 <button>

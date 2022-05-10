@@ -4,11 +4,12 @@ export const RoutesLogin =
     authPage:"/auth-page",
     about: "/about",
     contacts: "/contacts",
-    minefield: "/minefield",
     memory: "/authPage/memory",
+    minefield:"/authPage/minefield",
     choice:"/choice",
     test:"/test",
     testSetStateCallBack:"/test-setstate-callback",
+    
 
 
 

@@ -6,13 +6,12 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Navbar from "./components/Navbar";
 import Memory from "./navUser/Memory/Memory";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {RoutesLogin} from "./Routes/index";
-import Minefield from "./navUser/minefield/minefield";
 import ChoiceGame from "./navUser/ChoiceGame";
 import AuthPage from "./Pages/AuthPage";
-import Test from "./Pages/Test";
-import TestSetStateCallBack from "./Pages/TestSetStateCallBack";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {RoutesLogin} from "./Routes/index";
+import Minefield from "./navUser/Minefield/Minefield";
+
 
 function App() {
     const [auth, setAuth] = useState(null);
@@ -28,10 +27,7 @@ function App() {
                 <Routes>
                     <Route path={RoutesLogin.home} element={<Home/>}/>
                     <Route path={RoutesLogin.about} element={<About/>}/>
-                    <Route path={RoutesLogin.contacts} element={<Contacts/>}/>
-                    <Route path={RoutesLogin.test} element={<Test/>}/>
-                    <Route path={RoutesLogin.testSetStateCallBack} element={<TestSetStateCallBack/>}/>
-
+                    
                     {/* questa verifica può essere effettuata soltanto con Route non è possibile aggiungere <Routes></Routes> come tag al suo interno pke non lo legge */}
                     {!auth && (
                         <Route
@@ -47,6 +43,7 @@ function App() {
                             />
                             <Route path={RoutesLogin.memory} element={<Memory/>}/>
                             <Route path={RoutesLogin.minefield} element={<Minefield/>}/>
+                            <Route path={RoutesLogin.contacts} element={<Contacts/>}/>
                         </>
                     )}
                 </Routes>

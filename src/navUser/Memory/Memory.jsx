@@ -30,7 +30,7 @@ function Memory() {
   const [disabled, setDisabled] = useState(false);
   const [counter, setCounter] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [idScore, setIdScore] = useState(0);
+
   const navigate = useNavigate();
 
   //shuffleCards cards
@@ -84,7 +84,6 @@ function Memory() {
   }, [choiceOne, choiceTwo]);
 
   const newRecord = () => {
-    setIdScore(idScore + 1);
     // let date = new Date()
     let dates = new Date();
     let date = `${dates.getDay()}/${dates.getMonth()}/${dates.getFullYear()},  ${dates.getHours()}:${dates.getMinutes()}`;
@@ -103,10 +102,10 @@ function Memory() {
 
     //controllo Array
     if (!existing.scores) {
-      existing.scores = [];
+      existing.scoresMemory = [];
     }
     //push elementi
-    existing.scores.push({
+    existing.scoresMemory.push({
       date: date,
       newScore: turns,
     });
