@@ -3,7 +3,8 @@ import "../style/contact.css";
 
 function Contacts() {
   const [items, setItems] = useState(JSON.parse(localStorage.getItem("user")));
-  const [message, setMessage] = useState();
+  const [msgMemory, setMsgMemory] = useState();
+  const [msgMinefield, setMsgMinefield] = useState();
   const [listItems, setListItems] = useState([]);
   const [listItemsMine, setListItemsMine] = useState([]);
 
@@ -15,7 +16,7 @@ function Contacts() {
     //console.log("nuovo array", myNewItems);
     setListItems(myNewItems);
     }else{
-      setMessage('Non ci sono dati salvati')
+      setMsgMemory('Non ci sono dati salvati')
     }
     
   };
@@ -29,7 +30,7 @@ function Contacts() {
     console.log("nuovo array", myNewItemsMine);
     setListItemsMine(myNewItemsMine);
     }else{
-      setMessage('Non ci sono dati salvati')
+      setMsgMinefield('Non ci sono dati salvati')
     }
     
   };
@@ -40,7 +41,7 @@ function Contacts() {
         <button className="contact-button" onClick={handleClick}>
           Aggiorna Punteggio
         </button>
-        <h3>{message}</h3>
+        <h3>{msgMemory}</h3>
         {listItems.map((date, i) => (
           <ul className="contact-table" key={"data_" + i}>
             {date.map((newScore, j) => (
@@ -57,7 +58,7 @@ function Contacts() {
         <button className="contact-button" onClick={handleClickMine}>
           Aggiorna Punteggio
         </button>
-        <h3>{message}</h3>
+        <h3>{msgMinefield}</h3>
         {listItemsMine.map((date,i) => (
           <ul className="contact-table" key={"data_" + i}>
             {date.map((newScore, s) => (
