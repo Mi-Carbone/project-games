@@ -1,22 +1,24 @@
 import React,{useState} from 'react'
 function About() {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      checked: false,
-      item: "Uno ci sarà per tutti",
-    },
-    {
-      id: 2,
-      checked: false,
-      item: "item 2",
-    },
-    {
-      id: 3,
-      checked: false,
-      item: "Item 3",
-    },
-  ]);
+  const [items, setItems] = useState(
+  //   [
+  //   {
+  //     id: 1,
+  //     checked: false,
+  //     item: "Uno ci sarà per tutti",
+  //   },
+  //   {
+  //     id: 2,
+  //     checked: false,
+  //     item: "item 2",
+  //   },
+  //   {
+  //     id: 3,
+  //     checked: false,
+  //     item: "Item 3",
+  //   },
+  // ]
+  );
 
   const handleClick = (id) => {
     //nuovo array creato da elementi di stato

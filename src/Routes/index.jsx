@@ -2,6 +2,7 @@ export const RoutesLogin =
 {
     home: "/",
     authPage:"/auth-page",
+    authPageLogin:"/auth-page-login",
     about: "/about",
     contacts: "/contacts",
     memory: "/authPage/memory",
@@ -9,7 +10,7 @@ export const RoutesLogin =
     choice:"/choice",
     test:"/test",
     testSetStateCallBack:"/test-setstate-callback",
-    
+    registrationForm:"/authPage/registrationForm",
 
 
 

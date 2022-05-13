@@ -4,21 +4,16 @@ import "../style/form/form.css";
 import logins from "../data/dbLogin.json";
 import { useNavigate } from "react-router-dom";
 import { RoutesLogin } from "../Routes/index";
+import RegisterForm from "../components/RegistrationForm";
 import RegistrationForm from "../components/RegistrationForm";
-import ChoiceRegisterLogin from "../components/ChoiceRegisterLogin";
+import apiRequest from "../components/ApiRequest";
 
-function AuthPage() {
-  const API_URL = "http://localhost:35500/logins";
+function AuthPageRegistration() {
   const [access, setAccess] = useState(logins);
-  const [user, setUser] = useState({
-    name: null,
-    email: null,
-  });
+  const [user, setUser] = useState([]);
   const [error, setError] = useState("");
   const [userLogged, setUserLogged] = useState(false);
   const navigate = useNavigate();
-  
-
   /*
     useEffect(() => {
   
@@ -47,58 +42,87 @@ function AuthPage() {
                 //Se io non ho un utenza in localStorage
         
   }, []);*/
-  
+
+  const API_URL = "http://localhost:35500/logins";
   const [items, setItems] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  // useEffect(() => {
-  //   const fetchItems = async () => {
-  //     try {
-  //       const response = await fetch(API_URL);
 
-  //       if (!response.ok) {
-  //         //console.log("response.ok", !response.ok);
-  //         throw Error("Non ho ricevuto i dati che mi aspetto");
-  //       }
-  //       const ListItems = await response.json();
-  //       //console.log(ListItems, "file json");
-  //       setItems(ListItems);
-  //       setFetchError(null);
-  //     } catch (err) {
-  //       setFetchError(err.message);
-  //     } finally {
-  //       //L' finally istruzione che definisce un blocco di codice da eseguire indipendentemente dal risultato.
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   (async () => await fetchItems())();
-  // }, []);
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          //console.log("response.ok", !response.ok);
+          throw Error("Non ho ricevuto i dati che mi aspetto");
+        }
+        const ListItems = await response.json();
+        //console.log(ListItems, "file json");
+        setUser(ListItems);
+        //console.log(items,'items');
+        setFetchError(null);
+      } catch (err) {
+        // console.log(err.message, 'err.message');
+        setFetchError(err.message);
+      }
+      //   finally {
+      //     //L' finally istruzione che definisce un blocco di codice da eseguire indipendentemente dal risultato.
+      //     setIsLoading(false);
+      //   }
+    };
+    setTimeout(() => {
+      (async () => await fetchItems())();
+    }, 1000);
+  }, []);
 
-
-  
-
+  //   console.log(items,'items dopo');
 
   //controllo dei dati inseriti
-  const Login = (details) => {
+  const Registration = async (details) => {
     const chekedUser = access.logins.map((login) => {
-    
-      console.log("dettagli", details);
       if (
         login.email === details.email &&
         login.password === details.password
       ) {
-        console.log("esiste");
-        setUser({
-          name: details.name,
+        console.log("I dati inseriti sono già presenti");
+
+        setError("I dati inseriti sono già presenti");
+      } else {
+        const id = user.length ? user[user.length - 1].id + 1 : 1;
+        //creaiamo un nuovo array
+        const myNewItem = {
+          id,
+          userName: details.name,
           email: details.email,
           password: details.password,
-        });
-        localStorage.setItem("user", JSON.stringify(details));
-      } else {
-        setError("I dati inseriti non sono corretti");
+        };
+
+        //aggiorniamo l array con i nuovi dati e con quei vecchi
+        const listItems = [...user, myNewItem];
+
+        setUser(listItems);
+        // logins.logins.push(user)
       }
     });
+
+    const postOptions = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    };
+    //console.log(postOptions,' body');
+
+    const result = await apiRequest(API_URL, postOptions);
+
+    if (result) {
+      setFetchError(result);
+    }
   };
+
+  // console.log(user, "user Array");
+
   const onClick = () => {
     navigate(RoutesLogin.choice);
     window.location.reload();
@@ -117,11 +141,13 @@ function AuthPage() {
             <button onClick={onClick}>Avanti</button>
           </div>
         ) : (
-          <LoginForm Login={Login} error={error} />
+          <>
+            <RegistrationForm Registration={Registration} error={error} />
+          </>
         )}
       </div>
     </>
   );
 }
 
-export default AuthPage;
+export default AuthPageRegistration;

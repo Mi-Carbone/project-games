@@ -11,6 +11,9 @@ import AuthPage from "./Pages/AuthPage";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {RoutesLogin} from "./Routes/index";
 import Minefield from "./navUser/Minefield/Minefield";
+import RegistrationForm from "./components/RegistrationForm";
+import ChoiceRegisterLogin from "./components/ChoiceRegisterLogin";
+import AuthPageRegistration from "./Pages/AuthPageRegistration";
 
 
 function App() {
@@ -30,10 +33,15 @@ function App() {
                     
                     {/* questa verifica può essere effettuata soltanto con Route non è possibile aggiungere <Routes></Routes> come tag al suo interno pke non lo legge */}
                     {!auth && (
+                        <>
                         <Route
-                            path={RoutesLogin.authPage}
+                            path={RoutesLogin.authPageLogin}
                             element={<AuthPage authenticate={() => setAuth(false)}/>}
                         />
+                        <Route path={RoutesLogin.registrationForm} element={<AuthPageRegistration/>}/>
+                        <Route path={RoutesLogin.authPage} element={<ChoiceRegisterLogin/>}/>
+                        </>
+                        
                     )}
                     {auth && (
                         <>
@@ -41,6 +49,7 @@ function App() {
                                 path={RoutesLogin.choice}
                                 element={<ChoiceGame authenticate={() => setAuth(true)}/>}
                             />
+                            
                             <Route path={RoutesLogin.memory} element={<Memory/>}/>
                             <Route path={RoutesLogin.minefield} element={<Minefield/>}/>
                             <Route path={RoutesLogin.contacts} element={<Contacts/>}/>

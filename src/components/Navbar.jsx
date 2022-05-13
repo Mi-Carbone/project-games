@@ -13,32 +13,29 @@ function Navbar() {
 
   return (
     <>
-      <div className="">
-        <div className="navigation">
-          <h3>Logo</h3>
+      <div className="navigation">
+        <h3>Logo</h3>
+        <ul className="navigation-links">
+          <Link className="links" to={RoutesLogin.home}>
+            <li>Home</li>
+          </Link>
+          {!userLogged == "" ? (
+            <Link className="links" to={RoutesLogin.choice}>
+              <li>Profilo personale</li>
+            </Link>
+          ) : (
+            <Link className="links" to={RoutesLogin.authPage}>
+              <li>Accedi</li>
+            </Link>
+          )}
 
-          <ul className="navigation-links">
-            <Link className="links" to={RoutesLogin.home}>
-              <li>Home</li>
-            </Link>
-            {!userLogged == "" ? (
-              <Link className="links" to={RoutesLogin.choice}>
-                <li>Profilo personale</li>
-              </Link>
-            ) : (
-              <Link className="links" to={RoutesLogin.authPage}>
-                <li>Login</li>
-              </Link>
-            )}
-
-            <Link className="links" to={RoutesLogin.about}>
-              <li>About</li>
-            </Link>
-            <Link className="links" to={RoutesLogin.contacts}>
-              <li>Contacts</li>
-            </Link>
-          </ul>
-        </div>
+          <Link className="links" to={RoutesLogin.about}>
+            <li>About</li>
+          </Link>
+          <Link className="links" to={RoutesLogin.contacts}>
+            <li>Contacts</li>
+          </Link>
+        </ul>
       </div>
     </>
   );
