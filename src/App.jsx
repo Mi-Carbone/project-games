@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import "./App.css";
 
 import Contacts from "./Pages/Contacts";
@@ -8,66 +9,59 @@ import Navbar from "./components/Navbar";
 import Memory from "./navUser/Memory/Memory";
 import ChoiceGame from "./navUser/ChoiceGame";
 import AuthPage from "./Pages/AuthPage";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {RoutesLogin} from "./Routes/index";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RoutesLogin } from "./Routes/index";
 import Minefield from "./navUser/Minefield/Minefield";
-import RegistrationForm from "./components/RegistrationForm";
 import ChoiceRegisterLogin from "./components/ChoiceRegisterLogin";
 import AuthPageRegistration from "./Pages/AuthPageRegistration";
 
-
 function App() {
-    const [auth, setAuth] = useState(null);
+  const RequireAuth = () => {
+    if (localStorage.getItem("token")) {
+      return <Outlet />;
+    } else {
+      return <Navigate to={RoutesLogin.authPage} />;
+    }
+  };
 
-    useEffect(() => {
-        let user = localStorage.getItem("user");
-        user && JSON.parse(user) ? setAuth(true) : setAuth(false);
-    });
-    return (
-        <>
-            <BrowserRouter>
-                <Navbar/>
-                <Routes>
-                    <Route path={RoutesLogin.home} element={<Home/>}/>
-                    <Route path={RoutesLogin.about} element={<About/>}/>
-                    
-                    {/* questa verifica può essere effettuata soltanto con Route non è possibile aggiungere <Routes></Routes> come tag al suo interno pke non lo legge */}
-                    {!auth && (
-                        <>
-                        <Route
-                            path={RoutesLogin.authPageLogin}
-                            element={<AuthPage authenticate={() => setAuth(false)}/>}
-                        />
-                        <Route path={RoutesLogin.registrationForm} element={<AuthPageRegistration/>}/>
-                        <Route path={RoutesLogin.authPage} element={<ChoiceRegisterLogin/>}/>
-                        </>
-                        
-                    )}
-                    {auth && (
-                        <>
-                            <Route
-                                path={RoutesLogin.choice}
-                                element={<ChoiceGame authenticate={() => setAuth(true)}/>}
-                            />
-                            
-                            <Route path={RoutesLogin.memory} element={<Memory/>}/>
-                            <Route path={RoutesLogin.minefield} element={<Minefield/>}/>
-                            <Route path={RoutesLogin.contacts} element={<Contacts/>}/>
-                        </>
-                    )}
-                </Routes>
-            </BrowserRouter>
-        </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route element={<RequireAuth />}>
+            <Route path={RoutesLogin.home} element={<Home />} />
+            <Route path={RoutesLogin.about} element={<About />} />
+
+            {/* questa verifica può essere effettuata soltanto con Route non è possibile aggiungere <Routes></Routes> come tag al suo interno pke non lo legge */}
+
+            <Route path={RoutesLogin.contacts} element={<Contacts />} />
+
+            <Route path={RoutesLogin.choice} element={<ChoiceGame />} />
+
+            <Route path={RoutesLogin.memory} element={<Memory />} />
+            <Route path={RoutesLogin.minefield} element={<Minefield />} />
+          </Route>
+          <Route path={RoutesLogin.authPageLogin} element={<AuthPage />} />
+          <Route
+            path={RoutesLogin.registrationForm}
+            element={<AuthPageRegistration />}
+          />
+          <Route
+            path={RoutesLogin.authPage}
+            element={<ChoiceRegisterLogin />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
 
-{
-    /* <Route path='/login' element={<LoginPage />} />
+/* <Route path='/login' element={<LoginPage />} />
             <Route path='/after-login' element={<AfterLoginPage />} />
             <Route path='/login' element={<FormLogin />} /> */
-}
 
 // function getSavedValue(userLogged) {
 //   const savedValue = localStorage.setUserLogged(
@@ -86,3 +80,73 @@ export default App;
 // if (userLogged !== true) {
 //   return <Form to={RoutesLogin.login} replace />;
 // }
+
+/**
+ * 
+ * import React, { useEffect, useState } from "react";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import "./App.css";
+
+import Contacts from "./Pages/Contacts";
+import Home from "./Pages/Home";
+import About from "./Pages/About";
+import Navbar from "./components/Navbar";
+import Memory from "./navUser/Memory/Memory";
+import ChoiceGame from "./navUser/ChoiceGame";
+import AuthPage from "./Pages/AuthPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RoutesLogin } from "./Routes/index";
+import Minefield from "./navUser/Minefield/Minefield";
+import RegistrationForm from "./components/RegistrationForm";
+import ChoiceRegisterLogin from "./components/ChoiceRegisterLogin";
+import AuthPageRegistration from "./Pages/AuthPageRegistration";
+import { Auth } from "aws-amplify";
+import LoginUser from "./components/LoginForm";
+
+function App() {
+  const RequireAuth = () => {
+    if (localStorage.getItem('token')) {
+      return <Outlet />;
+    } else {
+      return <Navigate to={RoutesLogin.authPage} />;
+    }
+  };
+
+  return (
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route element={<RequireAuth/>}>
+            <Route path={RoutesLogin.home} element={<Home />} />
+            <Route path={RoutesLogin.about} element={<About />} />
+
+            {/* questa verifica può essere effettuata soltanto con Route non è possibile aggiungere <Routes></Routes> come tag al suo interno pke non lo legge *
+
+            <Route path={RoutesLogin.contacts} element={<Contacts />} />
+
+            <Route path={RoutesLogin.choice} element={<ChoiceGame />} />
+
+            <Route path={RoutesLogin.memory} element={<Memory />} />
+            <Route path={RoutesLogin.minefield} element={<Minefield />} />
+            
+          </Route>
+          <Route path={RoutesLogin.authPageLogin} element={<AuthPage />} />
+            <Route
+              path={RoutesLogin.registrationForm}
+              element={<AuthPageRegistration />}
+            />
+            <Route
+              path={RoutesLogin.authPage}
+              element={<ChoiceRegisterLogin />}
+            />
+          
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+}
+
+export default App;
+
+ */
