@@ -1,3 +1,31 @@
+import React from "react";
+import "../style/form/form.css";
+import LoginUser from "../components/LoginForm";
+
+
+
+
+function AuthPage() {
+
+  return (
+    <>
+      <div className="form"> 
+          <LoginUser />
+      </div>
+    </>
+  );
+}
+
+export default AuthPage;
+
+
+
+
+
+
+/*
+TUTTO QUESTO SENZA IL COLLEGAMENTO CON IL BACK DI LUCA
+
 import React, { useState, useEffect } from "react";
 import LoginForm from "../components/LoginForm";
 import "../style/form/form.css";
@@ -6,18 +34,21 @@ import { useNavigate } from "react-router-dom";
 import { RoutesLogin } from "../Routes/index";
 import RegistrationForm from "../components/RegistrationForm";
 import ChoiceRegisterLogin from "../components/ChoiceRegisterLogin";
+import LoginUser from "../components/LoginForm";
+
+
+
 
 function AuthPage() {
-  const API_URL = "http://localhost:35500/logins";
-  const [access, setAccess] = useState(logins);
+  //const API_URL = "http://localhost:35500/logins";
+  //const [access, setAccess] = useState(logins);
   const [user, setUser] = useState({
     name: null,
     email: null,
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(true);
   const [userLogged, setUserLogged] = useState(false);
   const navigate = useNavigate();
-  
 
   /*
     useEffect(() => {
@@ -46,8 +77,8 @@ function AuthPage() {
                 * *!/
                 //Se io non ho un utenza in localStorage
         
-  }, []);*/
-  
+  }, []);*
+
   const [items, setItems] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,54 +105,56 @@ function AuthPage() {
   //   (async () => await fetchItems())();
   // }, []);
 
-
-  
-
-
   //controllo dei dati inseriti
-  const Login = (details) => {
-    const chekedUser = access.logins.map((login) => {
-    
-      console.log("dettagli", details);
-      if (
-        login.email === details.email &&
-        login.password === details.password
-      ) {
-        console.log("esiste");
-        setUser({
-          name: details.name,
-          email: details.email,
-          password: details.password,
-        });
-        localStorage.setItem("user", JSON.stringify(details));
-      } else {
-        setError("I dati inseriti non sono corretti");
-      }
-    });
-  };
-  const onClick = () => {
-    navigate(RoutesLogin.choice);
-    window.location.reload();
-  };
+
+  // const Login = (details) => {
+  //   const chekedUser = access.logins.map((login) => {
+  //     console.log("dettagli", details);
+  //     if (
+  //       login.email === details.email &&
+  //       login.password === details.password
+  //     ) {
+  //       console.log("esiste");
+  //       setUser({
+  //         name: details.name,
+  //         email: details.email,
+  //         password: details.password,
+  //       });
+  //       localStorage.setItem("user", JSON.stringify(details));
+  //     } else {
+  //       setError("I dati inseriti non sono corretti");
+  //     }
+  //   });
+  // };
+  
+  
+  
+  // const onClick = () => {
+  //   navigate(RoutesLogin.choice);
+  //   window.location.reload();
+  // };
 
   return (
     <>
       {/* •
             {JSON.stringify(user, null, 2)}
-            • */}
-      <div className="form">
-        {user.email ? (
+             {!error ? (
           <div>
             <h2>Benvenuto {user.name}</h2>
             <p>la tua registrazione è avvenuta correttamente</p>
             <button onClick={onClick}>Avanti</button>
           </div>
         ) : (
-          <LoginForm Login={Login} error={error} />
+                    <LoginUser error={error}/>
         )}
+            • *
+      <div className="form">
+       
+          <LoginUser />
       </div>
     </>
   );
 }
 
 export default AuthPage;
+*/

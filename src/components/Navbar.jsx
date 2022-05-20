@@ -7,7 +7,7 @@ function Navbar() {
   const [userLogged, setUserLogget] = useState(null);
 
   useEffect(() => {
-    let user = localStorage.getItem("user");
+    let user = localStorage.getItem("sidebarUsername");
     user && JSON.parse(user) ? setUserLogget(true) : setUserLogget(false);
   });
 

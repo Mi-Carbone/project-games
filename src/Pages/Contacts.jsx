@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../style/contact.css";
 
 function Contacts() {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem("user")));
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem("sidebarUsername")));
   const [msgMemory, setMsgMemory] = useState();
   const [msgMinefield, setMsgMinefield] = useState();
   const [listItems, setListItems] = useState([]);
@@ -13,7 +13,7 @@ function Contacts() {
     const myNewItems = [];
     if (items.scoresMemory) {
       myNewItems.push(items.scoresMemory);
-    //console.log("nuovo array", myNewItems);
+    console.log("nuovo array", myNewItems);
     setListItems(myNewItems);
     }else{
       setMsgMemory('Non ci sono dati salvati')
@@ -47,7 +47,7 @@ function Contacts() {
             {date.map((newScore, j) => (
               <li className="contact-element" key={"score_" + j}>
                 Data: {newScore.date}
-                <span>Punteggio: {newScore.newScore}</span>
+                <span>Punteggio: {newScore.scoresMemory}</span>
               </li>
             ))}
           </ul>
