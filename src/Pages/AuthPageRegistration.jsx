@@ -1,4 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import "../style/form/form.css";
+import RegistrationForm from "../components/RegistrationForm";
+
+function AuthPageRegistration() {
+
+
+
+
+  return (
+    <>
+      <div className="form">
+        <RegistrationForm/>
+      </div>
+    </>
+  );
+}
+
+export default AuthPageRegistration;
+
+/**
+ * import React, { useState, useEffect } from "react";
 import LoginForm from "../components/LoginForm";
 import "../style/form/form.css";
 import logins from "../data/dbLogin.json";
@@ -41,7 +62,7 @@ function AuthPageRegistration() {
                 * *!/
                 //Se io non ho un utenza in localStorage
         
-  }, []);*/
+  }, []);*
 
   const API_URL = "http://localhost:35500/logins";
   const [items, setItems] = useState([]);
@@ -64,11 +85,10 @@ function AuthPageRegistration() {
       } catch (err) {
         // console.log(err.message, 'err.message');
         setFetchError(err.message);
+      } finally {
+        //L' finally istruzione che definisce un blocco di codice da eseguire indipendentemente dal risultato.
+        setIsLoading(false);
       }
-      //   finally {
-      //     //L' finally istruzione che definisce un blocco di codice da eseguire indipendentemente dal risultato.
-      //     setIsLoading(false);
-      //   }
     };
     setTimeout(() => {
       (async () => await fetchItems())();
@@ -89,7 +109,6 @@ function AuthPageRegistration() {
         setError("I dati inseriti sono già presenti");
       } else {
         const id = user.length ? user[user.length - 1].id + 1 : 1;
-        //creaiamo un nuovo array
         const myNewItem = {
           id,
           userName: details.name,
@@ -112,8 +131,6 @@ function AuthPageRegistration() {
       },
       body: JSON.stringify(user),
     };
-    //console.log(postOptions,' body');
-
     const result = await apiRequest(API_URL, postOptions);
 
     if (result) {
@@ -132,7 +149,7 @@ function AuthPageRegistration() {
     <>
       {/* •
             {JSON.stringify(user, null, 2)}
-            • */}
+            • *
       <div className="form">
         {user.email ? (
           <div>
@@ -151,3 +168,5 @@ function AuthPageRegistration() {
 }
 
 export default AuthPageRegistration;
+
+ */
