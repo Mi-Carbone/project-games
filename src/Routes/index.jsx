@@ -8,6 +8,7 @@ export const RoutesLogin =
     memory: "/authPage/memory",
     minefield:"/authPage/minefield",
     choice:"/choice",
+    forgotPass:"/forgot-password",
     test:"/test",
     testSetStateCallBack:"/test-setstate-callback",
     registrationForm:"/authPage/registrationForm",

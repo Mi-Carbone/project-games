@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { RoutesLogin } from "../Routes";
+
+
+
 const LoginUser = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -46,8 +49,13 @@ const LoginUser = () => {
     if (token !== "" && token !== "error") {
       localStorage.setItem("token", token);
       navigate(RoutesLogin.choice);
+      window.location.reload()
     }
   }, [token, navigate]);
+
+  const handleClickForgotPass = () => {
+    navigate(RoutesLogin.forgotPass);
+  }
   return (
     <div>
       <form className="form-login">
@@ -78,6 +86,8 @@ const LoginUser = () => {
             <button className="btn btn-primary" onClick={handleClick}>
               Accedi
             </button>
+            <button className="btn btn-primary ms-5"
+            onClick={handleClickForgotPass}>Password dimenticata</button>
           </div>
         </div>
       </form>

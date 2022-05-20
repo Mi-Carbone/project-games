@@ -14,6 +14,7 @@ import { RoutesLogin } from "./Routes/index";
 import Minefield from "./navUser/Minefield/Minefield";
 import ChoiceRegisterLogin from "./components/ChoiceRegisterLogin";
 import AuthPageRegistration from "./Pages/AuthPageRegistration";
+import ForgotPassword from "./components/ForgotPassword";
 
 function App() {
   const RequireAuth = () => {
@@ -43,6 +44,7 @@ function App() {
             <Route path={RoutesLogin.minefield} element={<Minefield />} />
           </Route>
           <Route path={RoutesLogin.authPageLogin} element={<AuthPage />} />
+          <Route path={RoutesLogin.forgotPass} element={<ForgotPassword />} />
           <Route
             path={RoutesLogin.registrationForm}
             element={<AuthPageRegistration />}
@@ -52,6 +54,7 @@ function App() {
             element={<ChoiceRegisterLogin />}
           />
         </Routes>
+
       </BrowserRouter>
     </>
   );
