@@ -1,0 +1,48 @@
+
+
+
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+
+# COGNITO e DYNAMO, cognito si occupa della parte della Autenticazione mentre Dynamo si occupa della registrazione di tutti i dati
+# I dati da inserire all interno della DB vanno inserite manualmente specificando cosa sono ogni singolo campo
+#Tabelle del DB su Dynamo
+# type UserGame Nome della tabella
+# @model significa che è una tabella
+# @auth significa che serve per l'autenticazione
+# auth(rules: [
+#     { allow: owner, ownerField: "owner", operations: [create, read, update, delete] }
+#   ]) significa che devi essere autorizzato per accedere all interno della tabella
+
+# owner: ID! @index(name: "byOwner") In questo modo si lega a Cognoto l altro DB 
+
+
+
+type UserGame @model @auth(rules: [
+    { allow: owner, ownerField: "owner", operations: [create, read, update, delete] }
+  ]) {
+  id: ID!   #il ! sta a significare che required
+  name: String!
+  surname: String!
+  email: String!
+  username: String!
+  password: String!
+  scores: [Scores] @hasMany   # @hasMany mette in relazione le due tabelle con lo Scores
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: ID! @index(name: "byOwner")
+}
+type Scores @model  @auth(rules: [
+    { allow: owner, ownerField: "owner", operations: [create, read, update, delete] }
+  ]){
+  id: ID!
+  game: String!
+  score: Int!
+  date: AWSDateTime!
+  user: UserGame @belongsTo
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: ID! @index(name: "byOwner")
+}
