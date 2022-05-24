@@ -32,7 +32,9 @@ const ForgotPassword = () => {
         console.log(data, "data ");
         setCheckForm(true);
       })
-      .catch((err) => console.log(err, "errore"));
+      .catch((err) => {
+        alert('Username non trovato')
+        console.log(err, "errore")});
   };
 
   const confirmForgotPass = async () => {
