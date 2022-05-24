@@ -79,7 +79,7 @@ function Memory() {
     if (counter === cardImages.length) {
       setGameOver(true);
       newRecord();
-      setTimeout(() => window.location.reload(), 5000);
+      setTimeout(() => window.location.reload(), 2500);
     }
   }, [choiceOne, choiceTwo]);
 
@@ -97,19 +97,19 @@ function Memory() {
      * dopo dichè possiamo pushare all interno della array vuoto i nostri valori
      */
 
-    var existing = localStorage.getItem("user");
+    var existing = localStorage.getItem("sidebarUsername");
     existing = existing ? JSON.parse(existing) : {};
 
     //controllo Array
-    if (!existing.scores) {
+    if (!existing) {
       existing.scoresMemory = [];
     }
     //push elementi
     existing.scoresMemory.push({
       date: date,
-      newScore: turns,
+      scoresMemory: turns,
     });
-    localStorage.setItem("user", JSON.stringify(existing));
+    localStorage.setItem("sidebarUsername", JSON.stringify(existing));
   };
 
   // Azzero le scelte e incremento di uno per passare alla selezione sucessiva
@@ -133,7 +133,7 @@ function Memory() {
         <button onClick={() => navigate(-1)}>go back</button>
       </div>
 
-      {!gameOver == "" ? (
+      {gameOver ? (
         <div>
           <h2>Winner</h2>
         </div>

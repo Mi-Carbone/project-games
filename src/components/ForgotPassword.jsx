@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { RoutesLogin } from "../Routes";
@@ -8,23 +8,17 @@ const ForgotPassword = () => {
   const [username, setUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
-  const [token, setToken] = useState("");
   const [CheckForm, setCheckForm] = useState(false);
   const [code, setCode] = useState("");
-  const [userScore, setUserScore] = useState({
-    name: "",
-    scoresMine: [],
-    scoresMemory: [],
-  });
 
   const handleChange = (event) => {
     if (event.target.name === "username") {
       setUsername(event.target.value);
     } else if (event.target.name === "newPassword") {
-        setNewPassword(event.target.value);
-      } else if (event.target.name === "verifyPassword") {
-        setVerifyPassword(event.target.value);
-      }
+      setNewPassword(event.target.value);
+    } else if (event.target.name === "verifyPassword") {
+      setVerifyPassword(event.target.value);
+    }
   };
 
   const handleClick = (event) => {
@@ -49,9 +43,7 @@ const ForgotPassword = () => {
     if (newPassword === "") {
       alert("Compila tutti i campi");
     }
-    //verifica della lunghezza della password minimo 8 caratteri
     if (newPassword.length >= 8) {
-      //la verifica del doppio campo della password
       if (newPassword === verifyPassword) {
         try {
           await Auth.forgotPasswordSubmit(
@@ -60,10 +52,10 @@ const ForgotPassword = () => {
             newPassword.trim()
           ).then((data) => {
             console.log("dataConferma", data);
-            
+
             if (data === "SUCCESS") {
-                navigate(RoutesLogin.authPageLogin);
-              };
+              navigate(RoutesLogin.authPageLogin);
+            }
           });
         } catch (error) {
           console.log(error, " error");
@@ -74,9 +66,8 @@ const ForgotPassword = () => {
     } else {
       alert("La lunghezza della password deve essere di almeno 8 caratteri");
     }
-    
   };
-  
+
   return (
     <>
       {!CheckForm ? (
@@ -133,7 +124,6 @@ const ForgotPassword = () => {
                       required
                     />
                   </div>
-                  {/**Provare a inserire la doppia conferma dell email */}
                   <div className="mb-3 form-group">
                     <label className="form-label">Conferma Password</label>
                     <input

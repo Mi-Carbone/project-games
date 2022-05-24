@@ -33,13 +33,8 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path={RoutesLogin.home} element={<Home />} />
             <Route path={RoutesLogin.about} element={<About />} />
-
-            {/* questa verifica può essere effettuata soltanto con Route non è possibile aggiungere <Routes></Routes> come tag al suo interno pke non lo legge */}
-
             <Route path={RoutesLogin.contacts} element={<Contacts />} />
-
             <Route path={RoutesLogin.choice} element={<ChoiceGame />} />
-
             <Route path={RoutesLogin.memory} element={<Memory />} />
             <Route path={RoutesLogin.minefield} element={<Minefield />} />
           </Route>

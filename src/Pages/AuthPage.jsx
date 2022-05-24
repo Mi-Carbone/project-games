@@ -3,8 +3,6 @@ import "../style/form/form.css";
 import LoginUser from "../components/LoginForm";
 
 
-
-
 function AuthPage() {
 
   return (

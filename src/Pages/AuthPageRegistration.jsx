@@ -4,9 +4,6 @@ import RegistrationForm from "../components/RegistrationForm";
 
 function AuthPageRegistration() {
 
-
-
-
   return (
     <>
       <div className="form">

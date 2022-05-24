@@ -8,8 +8,11 @@ const Minefield = () => {
   const [gameOver, setGameOver] = useState(false);
   const [winnerCells, setWinnerCells] = useState([]);
   const [winner, setWinner] = useState(false)
-  const [scoreMine, setScoreMine] = useState([])
+  // const [scoreMine, setScoreMine] = useState([])
   const navigate = useNavigate();
+
+
+
   // seconda parte del form
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -20,31 +23,31 @@ const Minefield = () => {
     setNumber({ ...number, row: value });
   };
   const handleGameOver = () => {
-    console.log("handleGameOver init:");
+    console.log("perso:");
 
     setGameOver(true);
   };
 
-
+console.log(winnerCells,'winnerCells');
   const handleWinner = () => {
     let numbers = number.row;
    
     setWinner(true);
     let dates = new Date();
     let date = `${dates.getDay()}/${dates.getMonth()}/${dates.getFullYear()},  ${dates.getHours()}:${dates.getMinutes()}`;
-    var existing = localStorage.getItem("user");
+    var existing = localStorage.getItem("sidebarUsername");
     existing = existing ? JSON.parse(existing) : {};
 
     //controllo Array
-    if (!existing.scoreMine) {
-      existing.scoreMine = [];
+    if (!existing) {
+      existing.scoresMine = [];
     }
     //push elementi
-    existing.scoreMine.push({
+    existing.scoresMine.push({
       date: date,
       newScore: numbers,
     });
-    localStorage.setItem("user", JSON.stringify(existing));
+    localStorage.setItem("sidebarUsername", JSON.stringify(existing));
   };
 
  
@@ -80,7 +83,8 @@ const Minefield = () => {
         {/* {gameOver && <h1>Game Over</h1>} */}
         {/* <button onClick={() => handleGameOver()}>Imponi Game Over</button> */}
         
-        
+        <div>
+
         {!winner ? (
           <>
             <h1 className="mt-4 pt-4 mb-4 pb-4">Inizia il gioco</h1>
@@ -93,22 +97,23 @@ const Minefield = () => {
                 handleWinner={handleWinner}
                 winner={winner}
                 />
-              ) : (
-                ""
-              )}
+                ) : (
+                  ""
+                  )}
             </div>
           </>
         ) : (
           <>
-          {!gameOver ? (
+          {!gameOver ? ( //gameover === false
             <h1>Vittoria</h1>
-          ):(
-          <h1 className="mx-5 mb-5 pb-5">Game Over</h1>) 
-
-          }
+            ):(
+              <h1 className="mx-5 mb-5 pb-5">Game Over</h1>) 
+              
+            }
             
           </>
         )}
+        </div>
       </div>
     </>
   );

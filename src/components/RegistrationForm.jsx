@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { RoutesLogin } from "../Routes";
@@ -9,7 +9,6 @@ const RegistrationForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
-  const [token, setToken] = useState("");
   const [CheckForm, setCheckForm] = useState(false);
   const [code, setCode] = useState("");
   const [userScore, setUserScore] = useState({
@@ -29,40 +28,14 @@ const RegistrationForm = () => {
       setVerifyPassword(event.target.value);
     }
   };
-  // const handleClick = async (event) => {
-  //   if (username === "" ||email === "" || password === "") {
-  //     alert("Compile all the fields");
-  //   } else {
-  //     event.preventDefault();
-  //     await Auth.signIn(username.trim().toLowerCase(), password.trim())
-  //       .then((data) => {
-  //         setUserScore({
-  //           name: data.username.toLowerCase(),
-  //           score: "",
-  //         });
-  //         userScore.name = data.username;
-  //         localStorage.setItem("sidebarUsername", JSON.stringify(userScore));
-  //         setToken(data.signInUserSession.accessToken.jwtToken);
-  //       })
-  //       .catch((err) => {
-  //         if (err) {
-  //           alert("Username o password not correct");
-  //         }
-  //       });
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (token !== "" && token !== "error") {
-  //     localStorage.setItem("token", token);
-  //     navigate(RoutesLogin.choice);
-  //   }
-  // }, [token, navigate]);
 
   //cattura evento del click per la gestione dei dati in entrata
   const handleClick = (event) => {
+    
     event.preventDefault();
+    console.log(event,'event');
     //verifica del campo vuoto
-    if (username === "" || email === "" || password === "") {
+    if (username === "" || email === "" || password === "" || verifyPassword === "") {
       alert("Compila tutti i campi");
     }
     //verifica della lunghezza della password minimo 8 caratteri
@@ -120,10 +93,6 @@ const RegistrationForm = () => {
     });
   };
 
-
-  // Auth.forgotPassword //prendere richiesta
-  // Auth.forgotPasswordSubmit //riaggiorna i valori
-
   return (
     <>
       {!CheckForm ? (
@@ -139,6 +108,7 @@ const RegistrationForm = () => {
                     placeholder="username"
                     name="username"
                     onChange={handleChange}
+                    minLength={3}
                     required
                   />
                 </div>
@@ -165,7 +135,6 @@ const RegistrationForm = () => {
                     required
                   />
                 </div>
-                {/**Provare a inserire la doppia conferma dell email */}
                 <div className="mb-3 form-group">
                   <label className="form-label">Conferma Password</label>
                   <input

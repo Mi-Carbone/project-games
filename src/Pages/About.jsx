@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 function About() {
-  const [items, setItems] = useState(
+  // const [items, setItems] = useState(
   //   [
   //   {
   //     id: 1,
@@ -18,30 +18,30 @@ function About() {
   //     item: "Item 3",
   //   },
   // ]
-  );
+  // );
 
-  const handleClick = (id) => {
-    //nuovo array creato da elementi di stato
-    const listItems = items.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item
-    );
-    setItems(listItems);
-    localStorage.setItem('list', JSON.stringify(listItems));
-    console.log(`key: ${id}`);
-  };
+  // const handleClick = (id) => {
+  //   //nuovo array creato da elementi di stato
+  //   const listItems = items.map((item) =>
+  //     item.id === id ? { ...item, checked: !item.checked } : item
+  //   );
+  //   setItems(listItems);
+  //   localStorage.setItem('list', JSON.stringify(listItems));
+  //   console.log(`key: ${id}`);
+  // };
 
-   const handleDelete = (id) => {
-    const listItems = items.filter((item) => item.id !== id);
-    setItems(listItems);
-    //Cancellazione dei dati salvati precedentemente in locale
-    localStorage.setItem("list", JSON.stringify(listItems));
-  };
+  //  const handleDelete = (id) => {
+  //   const listItems = items.filter((item) => item.id !== id);
+  //   setItems(listItems);
+  //   //Cancellazione dei dati salvati precedentemente in locale
+  //   localStorage.setItem("list", JSON.stringify(listItems));
+  // };
 
   return (
     <>
       <main>
         <h1>TO DO LIST</h1>
-      {items.length ? (
+      {/* {items.length ? (
         <ul>
           {items.map((item) => (
             <li className="item" key={item.id}>
@@ -61,7 +61,7 @@ function About() {
             <p style={{ marginTop: "2rem", color: "red", fontSize: "30px" }}>
               La tua lista è vuota
             </p>
-          )}
+          )} */}
       </main>
     </>
   );
