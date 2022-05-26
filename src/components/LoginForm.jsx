@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { API,Auth } from "aws-amplify";
 import { RoutesLogin } from "../Routes";
+import { login } from "../graphql/queries";
+
 
 
 
@@ -16,6 +18,18 @@ const LoginUser = () => {
     scoresMemory: [],
   });
 
+ 
+  function Login() {
+    return API.graphql({
+      query: login,
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      variables: {
+        username: username,
+        password: password
+      },
+      
+    });
+  }
   const handleChange = (event) => {
     if (event.target.name === "username") {
       setUsername(event.target.value);
@@ -28,18 +42,28 @@ const LoginUser = () => {
       alert("Compile all the fields");
     } else {
       event.preventDefault();
-      await Auth.signIn(username.trim().toLowerCase(), password.trim())
+      Auth.signIn(username.trim().toLowerCase(), password.trim())
         .then((data) => {
           setUserScore({
             name: data.username.toLowerCase(),
             score: "",
           });
           userScore.name = data.username;
+          Login()
+          .then((res) => {
+            console.log(res.data.login)
+            localStorage.setItem('usereId', res.data.login.id);
+          })
+          .catch((error) => {
+            alert('Error while logging');
+            console.log(error);
+          })
           localStorage.setItem("sidebarUsername", JSON.stringify(userScore));
           setToken(data.signInUserSession.accessToken.jwtToken);
         })
         .catch((err) => {
           if (err) {
+            console.log(err);
             alert("Username o password not correct");
           }
         });
@@ -49,9 +73,9 @@ const LoginUser = () => {
     if (token !== "" && token !== "error") {
       localStorage.setItem("token", token);
       navigate(RoutesLogin.choice);
-      window.location.reload()
+      // window.location.reload()
     }
-  }, [token, navigate]);
+  }, [token,navigate]);
 
   const handleClickForgotPass = () => {
     navigate(RoutesLogin.forgotPass);

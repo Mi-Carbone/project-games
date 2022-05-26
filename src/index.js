@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import awsconfig from '../src/aws-exports'
-import Amplify from 'aws-amplify';
+import { Amplify} from 'aws-amplify';
 Amplify.configure(awsconfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

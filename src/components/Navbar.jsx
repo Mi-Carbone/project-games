@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RoutesLogin } from "../Routes/index";
 //import RoutesLogin from "./Routes/login";
 
 function Navbar() {
   const [userLogged, setUserLogget] = useState(null);
+  const location = useLocation()
 
   useEffect(() => {
     let user = localStorage.getItem("sidebarUsername");
     user && JSON.parse(user) ? setUserLogget(true) : setUserLogget(false);
-  });
+  },[location]);
 
   return (
     <>

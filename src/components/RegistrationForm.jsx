@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { API, Auth} from "aws-amplify";
 import { RoutesLogin } from "../Routes";
+import { registerUser } from "../graphql/mutations";
+
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
@@ -16,9 +20,13 @@ const RegistrationForm = () => {
     scoresMine: [],
     scoresMemory: [],
   });
-
+  
   const handleChange = (event) => {
-    if (event.target.name === "username") {
+    if (event.target.name === "name") {
+      setName(event.target.value);
+    } else if (event.target.name === "surname") {
+      setSurname(event.target.value);
+    } else if (event.target.name === "username") {
       setUsername(event.target.value);
     } else if (event.target.name === "email") {
       setEmail(event.target.value);
@@ -31,11 +39,17 @@ const RegistrationForm = () => {
 
   //cattura evento del click per la gestione dei dati in entrata
   const handleClick = (event) => {
-    
     event.preventDefault();
-    console.log(event,'event');
+    console.log(event, "event");
     //verifica del campo vuoto
-    if (username === "" || email === "" || password === "" || verifyPassword === "") {
+    if (
+      name === "" ||
+      surname === "" ||
+      username === "" ||
+      email === "" ||
+      password === "" ||
+      verifyPassword === ""
+    ) {
       alert("Compila tutti i campi");
     }
     //verifica della lunghezza della password minimo 8 caratteri
@@ -64,30 +78,93 @@ const RegistrationForm = () => {
     }
   };
 
+  //copia i dati del utente che si sta registrando su Dynamo passando i dati richiesti dalla query
+  function createUser() {
+    return API.graphql({
+      query: registerUser,
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      variables: {
+        name: name,
+        surname: surname,
+        email: email,
+        username: username,
+        password: password
+      },
+      
+    });
+  }
+  // async function createUser() {
+  //     const apiData = API.graphql({
+  //       query: gql(registerUser),
+  //       variables: {
+  //         name: name,
+  //         surname: surname,
+  //         email: email,
+  //         username: username.toLowerCase(),
+  //         password: password,
+  //       },
+  //       authMode: "AMAZON_COGNITO_USER_POOLS",
+  //     });
+  //   return apiData;
+  // }
+  // async function createUser() {
+  //   const apiData = await API.graphql({
+  //     query: gql(registerUser),
+  //     variables: {
+  //       name: name,
+  //       surname: surname,
+  //       email: email,
+  //       username: username.toLowerCase(),
+  //       password: password,
+  //     },
+  //     authMode: "AMAZON_COGNITO_USER_POOLS",
+  //   });
+  //   return apiData;
+  // 
+
+
+
   //funzione per la gestione del codice di verifica OTP
   const confirm = async () => {
     //Controllo sul numero dei caratteri che devono essere soltanto 6
-    if (code.length !== 6 || code === '') {
-      alert('Il codice da inserire deve essere di almeno 6 caratteri')
-      confirm()
+    if (code.length !== 6 || code === "") {
+      alert("Il codice da inserire deve essere di almeno 6 caratteri");
+      confirm();
     }
     //richiamiamo la funzione di AWS con all'interno username(dato salvato nel primo form) e code(proveniente dal forma del codice OTP)
     await Auth.confirmSignUp(username.trim(), code.trim()).then((data) => {
       console.log("dataConferma", data);
       if (data === "SUCCESS") {
         Auth.signIn(username, password).then((data) => {
-          console.log(data, "data okay");
-
           setUserScore({
             name: data.username.toLowerCase(),
-            score: "",
+            scoresMine: [],
+            scoresMemory: [],
           });
           userScore.name = data.username;
-          localStorage.setItem('sidebarUsername',JSON.stringify(userScore))
-          localStorage.setItem('token', data.signInUserSession.accessToken.jwtToken)
+          localStorage.setItem("sidebarUsername", JSON.stringify(userScore));
+          localStorage.setItem(
+            "token",
+            data.signInUserSession.accessToken.jwtToken
+          );
 
-          navigate(RoutesLogin.choice)
-          window.location.reload()
+          console.log(data, "data okay");
+          // createUser() funzione che crea una copia dei dati dell utente su Dynamo sfruttando la funzione scritta sopra
+          // console.log(createUser(), "function");
+          createUser()
+            .then((res) => {
+              console.log("registrazione avvenuta e creazione su Dynamo ", res);
+              console.log("registrazione avvenuta e registerUser", res.data.registerUser);
+              localStorage.setItem('userId', res.data.registerUser.id);
+              navigate(RoutesLogin.choice);
+              window.location.reload();
+            })
+            .catch((err) => {
+              console.log("Errore nella registrazione su Dynamo", err);
+              alert("Errore nella registrazione");
+              Auth.deleteUser();
+              navigate(RoutesLogin.registrationForm);
+            });
         });
       }
     });
@@ -100,6 +177,30 @@ const RegistrationForm = () => {
           <div>
             <form className="form-login">
               <div className="form-inner">
+                <div className=" form-group">
+                  <label className="form-label">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="name"
+                    name="name"
+                    onChange={handleChange}
+                    minLength={3}
+                    required
+                  />
+                </div>
+                <div className=" form-group">
+                  <label className="form-label">Surname</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="surname"
+                    name="surname"
+                    onChange={handleChange}
+                    minLength={3}
+                    required
+                  />
+                </div>
                 <div className=" form-group">
                   <label className="form-label">Username</label>
                   <input

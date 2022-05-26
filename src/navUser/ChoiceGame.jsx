@@ -1,11 +1,11 @@
-import { Auth } from "aws-amplify";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RoutesLogin } from "../Routes/index";
+import { Auth } from "aws-amplify";
+
 
 function ChoiceGame() {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     navigate(RoutesLogin.authPage);
     localStorage.clear();
@@ -13,7 +13,6 @@ function ChoiceGame() {
     window.location.reload();
 
   };
-
   return (
     <>
       <div className="welcome">
