@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import SingleCard from "./componentsCard/singleCard";
 import "../../style/memory/memory.css";
 import { useNavigate } from "react-router-dom";
-
+import { API} from "aws-amplify";
+import { newScore } from "../../graphql/mutations";
 // PLUS
 // conteggio numero turno (ok),
 // Timer,
@@ -30,7 +31,7 @@ function Memory() {
   const [disabled, setDisabled] = useState(false);
   const [counter, setCounter] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-
+  const nameGame = 'Memory'
   const navigate = useNavigate();
 
   //shuffleCards cards
@@ -79,9 +80,23 @@ function Memory() {
     if (counter === cardImages.length) {
       setGameOver(true);
       newRecord();
-      setTimeout(() => window.location.reload(), 2500);
+      // setTimeout(() => window.location.reload(), 2500);
     }
   }, [choiceOne, choiceTwo]);
+
+  const id = localStorage.getItem('userId');
+  function newRecordScore() {
+    return API.graphql({
+      query: newScore,
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      variables: {
+        game: nameGame,
+        score: turns,
+        userId: id
+      },
+      
+    });
+  }
 
   const newRecord = () => {
     // let date = new Date()
@@ -110,6 +125,15 @@ function Memory() {
       scoresMemory: turns,
     });
     localStorage.setItem("sidebarUsername", JSON.stringify(existing));
+    newRecordScore()
+    .then((data) => {
+      console.log(data);
+      console.log(data.data.newScore.userId, 'io');
+      // console.log('login', );
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   };
 
   // Azzero le scelte e incremento di uno per passare alla selezione sucessiva

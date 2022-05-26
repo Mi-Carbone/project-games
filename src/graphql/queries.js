@@ -1,34 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const allUsers = /* GraphQL */ `
-  query AllUsers {
-    allUsers {
-      id
-      name
-      surname
-      email
-      username
-      password
-      scores {
-        items {
-          id
-          game
-          score
-          date
-          createdAt
-          updatedAt
-          owner
-          userGameScoresId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
 export const login = /* GraphQL */ `
   query Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -54,6 +26,34 @@ export const login = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const userScores = /* GraphQL */ `
+  query UserScores($userId: ID!, $game: String!) {
+    userScores(userId: $userId, game: $game) {
+      id
+      game
+      score
+      date
+      userId {
+        id
+        name
+        surname
+        email
+        username
+        password
+        scores {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+      userGameScoresId
     }
   }
 `;

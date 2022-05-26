@@ -41,6 +41,34 @@ export const registerUser = /* GraphQL */ `
     }
   }
 `;
+export const newScore = /* GraphQL */ `
+  mutation NewScore($game: String!, $score: Int!, $userId: ID!) {
+    newScore(game: $game, score: $score, userId: $userId) {
+      id
+      game
+      score
+      date
+      userId {
+        id
+        name
+        surname
+        email
+        username
+        password
+        scores {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+      userGameScoresId
+    }
+  }
+`;
 export const createUserGame = /* GraphQL */ `
   mutation CreateUserGame(
     $input: CreateUserGameInput!

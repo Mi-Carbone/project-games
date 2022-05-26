@@ -52,7 +52,7 @@ const LoginUser = () => {
           Login()
           .then((res) => {
             console.log(res.data.login)
-            localStorage.setItem('usereId', res.data.login.id);
+            localStorage.setItem('userId', res.data.login.id);
           })
           .catch((error) => {
             alert('Error while logging');

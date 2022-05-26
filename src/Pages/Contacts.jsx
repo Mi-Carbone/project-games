@@ -1,8 +1,14 @@
+import { API} from "aws-amplify";
 import React, { useState } from "react";
+import { userScores } from "../graphql/queries";
 import "../style/contact.css";
+import moment from "moment";
 
 function Contacts() {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem("sidebarUsername")));
+  // const [items, setItems] = useState(
+  //   JSON.parse(localStorage.getItem("sidebarUsername"))
+  // );
+  
   const [msgMemory, setMsgMemory] = useState();
   const [msgMinefield, setMsgMinefield] = useState();
   const [listItems, setListItems] = useState([]);
@@ -10,30 +16,63 @@ function Contacts() {
 
   const handleClick = () => {
     //console.log(items, "array salvati");
-    const myNewItems = [];
-    if (items.scoresMemory) {
-      myNewItems.push(items.scoresMemory);
-    console.log("nuovo array", myNewItems);
-    setListItems(myNewItems);
-    }else{
-      setMsgMemory('Non ci sono dati salvati')
-    }
-    
+    // const myNewItems = [];
+    // if (items.scoresMemory) {
+    //   myNewItems.push(items.scoresMemory);
+    // console.log("nuovo array", myNewItems);
+    // setListItems(myNewItems);
+    // }else{
+    //   setMsgMemory('Non ci sono dati salvati')
+    // }
+
+    userScoreGame("Memory")
+      .then((data) => {
+        console.log("result: ", data);
+        if(data.data.userScores.length === 0){
+          setMsgMinefield("Non ci sono dati salvati");
+        }
+        setListItems(data.data.userScores);
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+      });
   };
-
-
 
   const handleClickMine = () => {
-    const myNewItemsMine = [];
-    if (items.scoreMine) {
-      myNewItemsMine.push(items.scoreMine);
-    console.log("nuovo array", myNewItemsMine);
-    setListItemsMine(myNewItemsMine);
-    }else{
-      setMsgMinefield('Non ci sono dati salvati')
-    }
-    
+    // const myNewItemsMine = [];
+    // if (items.scoreMine) {
+    //   myNewItemsMine.push(items.scoreMine);
+    //   console.log("nuovo array", myNewItemsMine);
+    //   setListItemsMine(myNewItemsMine);
+    // } else {
+    //   setMsgMinefield("Non ci sono dati salvati");
+    // }
+
+    userScoreGame("MineField")
+    .then((data) => {
+      console.log("result: ", data);
+      if(data.data.userScores.length === 0){
+        setMsgMinefield("Non ci sono dati salvati");
+      }
+      setListItemsMine(data.data.userScores);
+    })
+    .catch((err) => {
+      console.log("error: ", err);
+    });
   };
+
+  const id = localStorage.getItem("userId");
+  function userScoreGame(gameName) {
+    return API.graphql({
+      query: userScores,
+      variables: {
+        userId: id,
+        game: gameName,
+      },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    });
+  }
+
   return (
     <>
       <div className="contact">
@@ -44,12 +83,10 @@ function Contacts() {
         <h3>{msgMemory}</h3>
         {listItems.map((date, i) => (
           <ul className="contact-table" key={"data_" + i}>
-            {date.map((newScore, j) => (
-              <li className="contact-element" key={"score_" + j}>
-                Data: {newScore.date}
-                <span>Punteggio: {newScore.scoresMemory}</span>
-              </li>
-            ))}
+            <li className="contact-element" key={"score_"}>
+              Data: {moment(date.date).format('MMMM Do YYYY, h:mm:ss a')}
+              <span>Punteggio: {date.score}</span>
+            </li>
           </ul>
         ))}
       </div>
@@ -59,14 +96,12 @@ function Contacts() {
           Aggiorna Punteggio
         </button>
         <h3>{msgMinefield}</h3>
-        {listItemsMine.map((date,i) => (
+        {listItemsMine.map((date, i) => (
           <ul className="contact-table" key={"data_" + i}>
-            {date.map((newScore, s) => (
-              <li className="contact-element" key={"score_" + s}>
-                Data: {newScore.date}
-                <span>Numero colonne e righe: {newScore.newScore}</span> 
-              </li>
-            ))}
+            <li className="contact-element" key={"score_"}>
+              Data: {moment(date.date).format('MMMM Do YYYY, h:mm:ss a')}
+              <span>Punteggio: {date.score}</span>
+            </li>
           </ul>
         ))}
       </div>
@@ -75,48 +110,6 @@ function Contacts() {
 }
 
 export default Contacts;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {
   /**
