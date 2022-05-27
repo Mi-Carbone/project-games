@@ -26,6 +26,7 @@ export const login = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -49,12 +50,18 @@ export const userScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt
       owner
       userGameScoresId
     }
+  }
+`;
+export const getS3url = /* GraphQL */ `
+  query GetS3url($file: String) {
+    getS3url(file: $file)
   }
 `;
 export const getUserGame = /* GraphQL */ `
@@ -82,6 +89,7 @@ export const getUserGame = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -105,6 +113,7 @@ export const listUserGames = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       nextToken
     }
@@ -130,6 +139,7 @@ export const getScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt
@@ -160,6 +170,7 @@ export const listScores = /* GraphQL */ `
           createdAt
           updatedAt
           owner
+          image
         }
         createdAt
         updatedAt

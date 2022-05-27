@@ -1,25 +1,22 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "../../style/minfield/grid.css";
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 import Button from "./buttonCells";
 
 const Grid = (props) => {
-
-
   const rowst = props.value;
 
-  const totalNumberCellsWinner = (rowst * rowst) - rowst;
+  const totalNumberCellsWinner = rowst * rowst - rowst;
   const cells = [];
-
+  var count = 1;
   //creazione matrice
   for (let row = 0; row < rowst; row++) {
     cells.push([]);
     for (let col = 0; col < rowst; col++) {
       //console.log(cells[row]);
-      cells[row].push({ bombe: false });
+      cells[row].push({ bombe: false, disabled: false });
     }
   }
-  
 
   //Randomizzatore di bombe
   cells.forEach((element, index) => {
@@ -34,9 +31,6 @@ const Grid = (props) => {
       }
     }
   });
-
-  
-
 
   for (let row = 0; row < rowst; row++) {
     for (let col = 0; col < rowst; col++) {
@@ -76,28 +70,7 @@ const Grid = (props) => {
     }
   }
 
-
-
-  // console.log("button props", props);
-  
-
-  // const handleClick = (value) => {
-  //   const winnerCells = props.winnerCells
-  //   const totalNumberCellsWinner = props.totalNumberCellsWinner;
-  //   console.log(totalNumberCellsWinner, 'numero celle');
-  //   if (value === -1) {
-  //     setCell("💣");
-  //     props.handleGameOver();
-  //     //voglio terminare il gioco
-  //   } else {
-  //     setCell(value);
-  //     winnerCells.push(cell)
-  //     if (winnerCells.length == totalNumberCellsWinner) {
-  //       console.log('vittoria');
-  //     }
-  //   }
-  // };
-  console.log(cells);
+  console.log(cells, "cells");
   return (
     <>
       <div className="container row mt-4 pb-4 ml-5 mx-5">
@@ -105,15 +78,16 @@ const Grid = (props) => {
           <div key={"row_" + i}>
             {row.map((element, j) => (
               <div key={"col_" + j} className="square covered">
-                
-                <Button 
-                value={element.value} 
-                bomb={element.bomb}
-                handleGameOver={props.handleGameOver}
-                winnerCells={props.winnerCells}
-                totalNumberCellsWinner={totalNumberCellsWinner}
-                handleWinner={props.handleWinner}
-                winner={props.winner}
+                <Button
+                  count={count++}
+                  value={element.value}
+                  bomb={element.bomb}
+                  disabled={element.disabled}
+                  handleGameOver={props.handleGameOver}
+                  winnerCells={props.winnerCells}
+                  totalNumberCellsWinner={totalNumberCellsWinner}
+                  handleWinner={props.handleWinner}
+                  winner={props.winner}
                 />
               </div>
             ))}

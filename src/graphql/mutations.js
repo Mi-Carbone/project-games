@@ -8,6 +8,7 @@ export const registerUser = /* GraphQL */ `
     $email: String!
     $username: String!
     $password: String!
+    $image: String
   ) {
     registerUser(
       name: $name
@@ -15,6 +16,7 @@ export const registerUser = /* GraphQL */ `
       email: $email
       username: $username
       password: $password
+      image: $image
     ) {
       id
       name
@@ -38,6 +40,7 @@ export const registerUser = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -61,11 +64,41 @@ export const newScore = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt
       owner
       userGameScoresId
+    }
+  }
+`;
+export const updateProfile = /* GraphQL */ `
+  mutation UpdateProfile($image: String, $userId: ID!) {
+    updateProfile(image: $image, userId: $userId) {
+      id
+      name
+      surname
+      email
+      username
+      password
+      scores {
+        items {
+          id
+          game
+          score
+          date
+          createdAt
+          updatedAt
+          owner
+          userGameScoresId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+      image
     }
   }
 `;
@@ -97,6 +130,7 @@ export const createUserGame = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -128,6 +162,7 @@ export const updateUserGame = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -159,6 +194,7 @@ export const deleteUserGame = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -185,6 +221,7 @@ export const createScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt
@@ -216,6 +253,7 @@ export const updateScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt
@@ -247,6 +285,7 @@ export const deleteScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt

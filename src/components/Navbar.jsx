@@ -33,8 +33,8 @@ function Navbar() {
           <Link className="links" to={RoutesLogin.about}>
             <li>About</li>
           </Link>
-          <Link className="links" to={RoutesLogin.contacts}>
-            <li>Contacts</li>
+          <Link className="links" to={RoutesLogin.games}>
+            <li>Games</li>
           </Link>
         </ul>
       </div>

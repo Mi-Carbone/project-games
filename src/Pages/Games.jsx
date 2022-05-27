@@ -1,18 +1,21 @@
-import { API} from "aws-amplify";
+import { API } from "aws-amplify";
 import React, { useState } from "react";
 import { userScores } from "../graphql/queries";
 import "../style/contact.css";
 import moment from "moment";
 
-function Contacts() {
+const cardImages = "/img/image-avatar.png";
+
+function Games() {
   // const [items, setItems] = useState(
   //   JSON.parse(localStorage.getItem("sidebarUsername"))
   // );
-  
+
   const [msgMemory, setMsgMemory] = useState();
   const [msgMinefield, setMsgMinefield] = useState();
   const [listItems, setListItems] = useState([]);
   const [listItemsMine, setListItemsMine] = useState([]);
+  const [changeImage, setChangeImage] = useState([]);
 
   const handleClick = () => {
     //console.log(items, "array salvati");
@@ -28,8 +31,8 @@ function Contacts() {
     userScoreGame("Memory")
       .then((data) => {
         console.log("result: ", data);
-        if(data.data.userScores.length === 0){
-          setMsgMinefield("Non ci sono dati salvati");
+        if (data.data.userScores.length === 0) {
+          setMsgMemory("Non ci sono dati salvati");
         }
         setListItems(data.data.userScores);
       })
@@ -48,17 +51,17 @@ function Contacts() {
     //   setMsgMinefield("Non ci sono dati salvati");
     // }
 
-    userScoreGame("MineField")
-    .then((data) => {
-      console.log("result: ", data);
-      if(data.data.userScores.length === 0){
-        setMsgMinefield("Non ci sono dati salvati");
-      }
-      setListItemsMine(data.data.userScores);
-    })
-    .catch((err) => {
-      console.log("error: ", err);
-    });
+    userScoreGame("Minefield")
+      .then((data) => {
+        console.log("result: ", data);
+        if (data.data.userScores.length === 0) {
+          setMsgMinefield("Non ci sono dati salvati");
+        }
+        setListItemsMine(data.data.userScores);
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+      });
   };
 
   const id = localStorage.getItem("userId");
@@ -73,9 +76,16 @@ function Contacts() {
     });
   }
 
+  const handleClickImage = () => {};
+
   return (
     <>
       <div className="contact">
+        <img src={cardImages} alt="" />
+        <button className="contact-button" onClick={handleClickImage}>
+          Cambia immagine
+        </button>
+
         <h1>Punteggio Memory</h1>
         <button className="contact-button" onClick={handleClick}>
           Aggiorna Punteggio
@@ -84,7 +94,7 @@ function Contacts() {
         {listItems.map((date, i) => (
           <ul className="contact-table" key={"data_" + i}>
             <li className="contact-element" key={"score_"}>
-              Data: {moment(date.date).format('MMMM Do YYYY, h:mm:ss a')}
+              Data: {moment(date.date).format("MMMM Do YYYY, h:mm:ss a")}
               <span>Punteggio: {date.score}</span>
             </li>
           </ul>
@@ -96,11 +106,11 @@ function Contacts() {
           Aggiorna Punteggio
         </button>
         <h3>{msgMinefield}</h3>
-        {listItemsMine.map((date, i) => (
-          <ul className="contact-table" key={"data_" + i}>
+        {listItemsMine.map((date, j) => (
+          <ul className="contact-table" key={"data_" + j}>
             <li className="contact-element" key={"score_"}>
-              Data: {moment(date.date).format('MMMM Do YYYY, h:mm:ss a')}
-              <span>Punteggio: {date.score}</span>
+              Data: {moment(date.date).format("MMMM Do YYYY, h:mm:ss a")}
+              <span>Numero colonne: {date.score}</span>
             </li>
           </ul>
         ))}
@@ -109,7 +119,7 @@ function Contacts() {
   );
 }
 
-export default Contacts;
+export default Games;
 
 {
   /**

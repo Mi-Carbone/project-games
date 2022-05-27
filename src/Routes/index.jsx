@@ -4,7 +4,7 @@ export const RoutesLogin =
     authPage:"/auth-page",
     authPageLogin:"/auth-page-login",
     about: "/about",
-    contacts: "/contacts",
+    games: "/games",
     memory: "/authPage/memory",
     minefield:"/authPage/minefield",
     choice:"/choice",

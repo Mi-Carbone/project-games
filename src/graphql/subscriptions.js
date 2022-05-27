@@ -26,6 +26,7 @@ export const onCreateUserGame = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -54,6 +55,7 @@ export const onUpdateUserGame = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -82,6 +84,7 @@ export const onDeleteUserGame = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      image
     }
   }
 `;
@@ -105,6 +108,7 @@ export const onCreateScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt
@@ -133,6 +137,7 @@ export const onUpdateScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt
@@ -161,6 +166,7 @@ export const onDeleteScores = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        image
       }
       createdAt
       updatedAt

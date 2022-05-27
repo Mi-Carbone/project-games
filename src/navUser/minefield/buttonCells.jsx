@@ -4,26 +4,37 @@ import "../../style/minfield/button.css";
 const Button = (props) => {
   // console.log("button props", props);
   const [cell, setCell] = useState("");
+  const [disabled, setDisabled] = useState(props.disabled);
+  
+
   // const [winner, setWinner] = useState(false)
   const [gameOver, setGameOver] = useState(false);
-  // const [counter, setCounter] = useState([])
 
-
+ 
   const handleClick = (value) => {
+    console.log(disabled);
     if (value === -1) {
       setCell("💣");
-      return props.handleGameOver(setGameOver(true));
+      
+      throw props.handleGameOver();
       //voglio terminare il gioco
-    } else {
-      setCell(value);
+    } else{
       
-        console.log(value,'value');
-      
+      if(!disabled){
+        setCell(value);
+        props.winnerCells.push(value)
+        console.log(props.winnerCells);
+        if( props.winnerCells.length === props.totalNumberCellsWinner){
+          props.handleWinner()
+        }
+        setDisabled(true)
+
+      }
+
+     
     }
   };
 
-
-// console.log(`color= red`+props.value);
 
 
   return (
@@ -31,7 +42,7 @@ const Button = (props) => {
       <div
         className="Button"
         onClick={() => {
-          handleClick(props.value);
+          handleClick(props.value)
         }}
       >
         {cell}
