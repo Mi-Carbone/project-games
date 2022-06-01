@@ -1,8 +1,10 @@
 import { API } from "aws-amplify";
 import React, { useState } from "react";
-import { userScores } from "../graphql/queries";
+import { userScores, getS3url } from "../graphql/queries";
 import "../style/contact.css";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import { RoutesLogin } from "../Routes";
 
 const cardImages = "/img/image-avatar.png";
 
@@ -15,8 +17,7 @@ function Games() {
   const [msgMinefield, setMsgMinefield] = useState();
   const [listItems, setListItems] = useState([]);
   const [listItemsMine, setListItemsMine] = useState([]);
-  const [changeImage, setChangeImage] = useState([]);
-
+  const navigate = useNavigate();
   const handleClick = () => {
     //console.log(items, "array salvati");
     // const myNewItems = [];
@@ -76,16 +77,36 @@ function Games() {
     });
   }
 
-  const handleClickImage = () => {};
+  function updateUserImage() {
+    const nameImage = JSON.parse(localStorage.getItem("sidebarUsername")).name + '.image'
+    return API.graphql({
+      query: getS3url,
+      variables: {
+        name: nameImage
+      },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    });
+  }
+  const handlChangeImage = () =>{
+    updateUserImage()
+    .then((data) => {
+      console.log("result: ", data);
+      
+    })
+    .catch((err) => {
+      console.log("error: ", err);
+    });
+    navigate(RoutesLogin.changeImage)
+  }
+
 
   return (
     <>
       <div className="contact">
         <img src={cardImages} alt="" />
-        <button className="contact-button" onClick={handleClickImage}>
+        <button className="contact-button" onClick={handlChangeImage}>
           Cambia immagine
         </button>
-
         <h1>Punteggio Memory</h1>
         <button className="contact-button" onClick={handleClick}>
           Aggiorna Punteggio

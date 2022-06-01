@@ -15,6 +15,7 @@ import Minefield from "./navUser/Minefield/Minefield";
 import ChoiceRegisterLogin from "./components/ChoiceRegisterLogin";
 import AuthPageRegistration from "./Pages/AuthPageRegistration";
 import ForgotPassword from "./components/ForgotPassword";
+import ChangeImage from "./components/ChangeImage";
 
 function App() {
   const RequireAuth = () => {
@@ -37,6 +38,7 @@ function App() {
             <Route path={RoutesLogin.choice} element={<ChoiceGame />} />
             <Route path={RoutesLogin.memory} element={<Memory />} />
             <Route path={RoutesLogin.minefield} element={<Minefield />} />
+            <Route path={RoutesLogin.changeImage} element={<ChangeImage />} />
           </Route>
           <Route path={RoutesLogin.authPageLogin} element={<AuthPage />} />
           <Route path={RoutesLogin.forgotPass} element={<ForgotPassword />} />

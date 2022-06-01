@@ -9,6 +9,7 @@ export const RoutesLogin =
     minefield:"/authPage/minefield",
     choice:"/choice",
     forgotPass:"/forgot-password",
+    changeImage: "/games/change-image",
     test:"/test",
     testSetStateCallBack:"/test-setstate-callback",
     registrationForm:"/authPage/registrationForm",
