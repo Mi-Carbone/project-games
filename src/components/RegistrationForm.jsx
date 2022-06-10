@@ -156,7 +156,7 @@ const RegistrationForm = () => {
               console.log("registrazione avvenuta e creazione su Dynamo ", res);
               console.log("registrazione avvenuta e registerUser", res.data.registerUser);
               localStorage.setItem('userId', res.data.registerUser.id);
-              navigate(RoutesLogin.choice);
+              navigate(RoutesLogin.choices);
               window.location.reload();
             })
             .catch((err) => {

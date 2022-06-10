@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { userScores, getS3url } from "../graphql/queries";
 import "../style/contact.css";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import { RoutesLogin } from "../Routes";
+
+
 
 // const cardImages = "/img/image-avatar.png";
 
@@ -17,7 +17,7 @@ function Scores() {
   const [msgMinefield, setMsgMinefield] = useState();
   const [listItems, setListItems] = useState([]);
   const [listItemsMine, setListItemsMine] = useState([]);
-  const navigate = useNavigate();
+  
 
 
   const handleClick = () => {
@@ -60,17 +60,9 @@ function Scores() {
     });
   }
 
-  const handlChangeImage = () =>{
-    navigate(RoutesLogin.changeImage)
-  }
-
   return (
     <>
       <div className="contact">
-        {/* <img src={cardImages} alt="" /> */}
-        <button className="contact-button" onClick={handlChangeImage}>
-          Cambia immagine
-        </button>
         <h1>Punteggio Memory</h1>
         <button className="contact-button" onClick={handleClick}>
           Aggiorna Punteggio

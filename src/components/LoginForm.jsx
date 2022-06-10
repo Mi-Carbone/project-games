@@ -72,7 +72,7 @@ const LoginUser = () => {
   useEffect(() => {
     if (token !== "" && token !== "error") {
       localStorage.setItem("token", token);
-      navigate(RoutesLogin.choice);
+      navigate(RoutesLogin.choices);
       // window.location.reload()
     }
   }, [token,navigate]);

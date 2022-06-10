@@ -4,7 +4,7 @@ import "./App.css";
 
 import Scores from "./Pages/Scores";
 import Home from "./Pages/Home";
-import About from "./Pages/About";
+import Profile from "./Pages/Profile";
 import Navbar from "./components/Navbar";
 import Memory from "./navUser/Memory/Memory";
 import ChoiceGames from "./navUser/ChoiceGames";
@@ -33,7 +33,7 @@ function App() {
         <Routes>
           <Route element={<RequireAuth />}>
             <Route path={RoutesLogin.home} element={<Home />} />
-            <Route path={RoutesLogin.about} element={<About />} />
+            <Route path={RoutesLogin.profile} element={<Profile />} />
             <Route path={RoutesLogin.scores} element={<Scores />} />
             <Route path={RoutesLogin.choices} element={<ChoiceGames />} />
             <Route path={RoutesLogin.memory} element={<Memory />} />

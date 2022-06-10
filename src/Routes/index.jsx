@@ -3,7 +3,7 @@ export const RoutesLogin =
     home: "/",
     authPage:"/auth-page",
     authPageLogin:"/auth-page-login",
-    about: "/about",
+    profile: "/profile",
     scores: "/scores",
     memory: "/authPage/memory",
     minefield:"/authPage/minefield",

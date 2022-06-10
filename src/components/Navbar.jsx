@@ -1,8 +1,9 @@
+import { Auth } from "aws-amplify";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RoutesLogin } from "../Routes/index";
-//import RoutesLogin from "./Routes/login";
 
+const logo = "/logo.png";
 function Navbar() {
   const [userLogged, setUserLogget] = useState(null);
   const location = useLocation()
@@ -12,10 +13,19 @@ function Navbar() {
     user && JSON.parse(user) ? setUserLogget(true) : setUserLogget(false);
   },[location]);
 
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate(RoutesLogin.authPage);
+    localStorage.clear();
+    Auth.signOut();
+    window.location.reload();
+
+  };
+
   return (
     <>
       <div className="navigation">
-        <h3>Logo</h3>
+        <span className="logo"/>
         <ul className="navigation-links">
           <Link className="links" to={RoutesLogin.home}>
             <li>Home</li>
@@ -25,8 +35,8 @@ function Navbar() {
             <Link className="links" to={RoutesLogin.choices}>
               <li>Games</li>
             </Link>
-          <Link className="links" to={RoutesLogin.about}>
-            <li>Profilo personale</li>
+            <Link className="links" to={RoutesLogin.profile}>
+              <li>Profilo personale</li>
             </Link>
             </>
           ) : (
@@ -37,6 +47,9 @@ function Navbar() {
           <Link className="links" to={RoutesLogin.scores}>
             <li>Score</li>
           </Link>
+          <span 
+          className="btn-logout"
+          onClick={handleLogout}>Logout</span>
         </ul>
       </div>
     </>

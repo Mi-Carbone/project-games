@@ -4,10 +4,7 @@ import { updateProfile } from "../graphql/mutations";
 import { getS3url } from "../graphql/queries";
 import axios from "axios";
 
-
-
 const ChangeImage = () => {
-  const [image, setImage] = useState("");
   const [file, setFile] = useState("");
   const [url, setUrl] = useState("");
 
@@ -16,53 +13,47 @@ const ChangeImage = () => {
       headers: {
         "Content-Type": file.type,
       },
-    }
+    };
     try {
       console.log(url, "try");
       console.log(file, "try");
-      const res = axios.put(url, file, options)
+      const res = axios.put(url, file, options);
       res
         .then((data) => {
-          if(data.status === 200){
+          if (data.status === 200) {
             //chiami dynamodb per update
+            console.log(file.name, 'nome immagine');
+            const id = localStorage.getItem("userId");
+            const upProfile = API.graphql({
+              query: updateProfile,
+              variables: {
+                image: file.name,
+                userId: id,
+              },
+              authMode: "AMAZON_COGNITO_USER_POOLS",
+            });
+
+            upProfile
+              .then((data) => {
+                console.log(data, "ci sono");
+                //navigte o reload
+              })
+              .catch((err) => {
+                console.log(err, "non ci sono");
+              });
           }
         })
         .catch((err) => {
-          console.log('errore: ', err);
-          alert('Errore...');
-        })
+          console.log("errore: ", err);
+          alert("Errore...");
+        });
     } catch (error) {
       console.error("Error uploading file: ", error);
     }
   }
-  // .then((data) => {
-        //   console.log("success: ", data);
-        // })
-        // .catch((err) => {
-        //   console.log("error: ", err);
-        // });
-  // const id = localStorage.getItem("userId");
-  // const upProfile = API.graphql({
-  //   query: updateProfile,
-  //   variables: {
-  //     image: file.name,
-  //     id: id,
-  //   },
-  //   authMode: "AMAZON_COGNITO_USER_POOLS",
-  // });
-
-  // upProfile
-  //   .then((data) => {
-  //     console.log(data, "ci sono");
-  //   })
-  //   .catch((err) => {
-  //     console.log(err, "non ci sono");
-  //   });
-
   useEffect(() => {
     getUrl();
   }, [file]);
-
 
   const getUrl = () => {
     API.graphql({
@@ -71,7 +62,8 @@ const ChangeImage = () => {
         file: file.name,
       },
       authMode: "AMAZON_COGNITO_USER_POOLS",
-    }).then((data) => {
+    })
+      .then((data) => {
         console.log(data.data.getS3url, "url");
         setUrl(data.data.getS3url);
         //handleUploadImage(data.data.getS3url);
@@ -84,7 +76,7 @@ const ChangeImage = () => {
   async function onChange(e) {
     //e.preventDefault();
     //console.log(e.target.files[0]);
-    console.log(typeof(e.target.files[0]), 'ciao');
+    console.log(typeof e.target.files[0], "ciao");
     setFile(e.target.files[0]);
   }
 
@@ -117,6 +109,51 @@ const ChangeImage = () => {
 };
 
 export default ChangeImage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // .then((data) => {
+  //   console.log("success: ", data);
+  // })
+  // .catch((err) => {
+  //   console.log("error: ", err);
+  // });
+  // const id = localStorage.getItem("userId");
+  // const upProfile = API.graphql({
+  //   query: updateProfile,
+  //   variables: {
+  //     image: file.name,
+  //     id: id,
+  //   },
+  //   authMode: "AMAZON_COGNITO_USER_POOLS",
+  // });
+
+  // upProfile
+  //   .then((data) => {
+  //     console.log(data, "ci sono");
+  //   })
+  //   .catch((err) => {
+  //     console.log(err, "non ci sono");
+  //   });
+
+
+
 
 // function updateUserImage() {
 //   const nameImage = JSON.parse(localStorage.getItem("sidebarUsername")).name + '.image'

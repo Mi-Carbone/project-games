@@ -1,18 +1,43 @@
 /* reset */
 
-*{ 
+* {
   margin: 0;
   padding: 0;
   box-sizing: content-box;
 }
 
+/* LOGO*/
+
+.logo {
+  background-image: url("../public/log.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 140px;
+  animation-name: ruota;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  margin-left: -100px;
+}
+
+@keyframes ruota {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* set Max-width of page*/
 html {
-  width:100%;
+  width: 100%;
   overflow-x: hidden;
 }
 
-.navigation{
+.navigation {
   height: 10vh;
   display: flex;
   justify-content: space-around;
@@ -21,7 +46,7 @@ html {
   color: aliceblue;
 }
 
-.navigation-links{
+.navigation-links {
   display: flex;
   justify-content: space-between;
   list-style: none;
@@ -29,84 +54,21 @@ html {
   font-weight: 700;
 }
 
-.homepage{
+.homepage {
   text-align: center;
 }
 
-.links{
+.links {
   color: white;
   text-decoration: none;
   padding: 0px 10px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .App {
-  text-align: center;
+/* NAVBAR */
+.btn-logout {
+  border: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.btn-logout:hover {
+  color: crimson;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */

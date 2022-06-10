@@ -1,0 +1,65 @@
+.personal-profile {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-around;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+
+.ct-main-circular-image {
+  position: relative;
+  /* background: red; */
+  /* border-radius: 100%; */
+  /* border: 1px solid red; */
+  /* overflow: hidden; */
+  text-align: center;
+  /* Trick per ratio */
+  display: block;
+  height: 0;
+  padding-top: 100%;
+}
+
+.ct-main-circular-image-child {
+  position: absolute;
+  text-align: center;
+  border-radius: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* background: green; */
+}
+
+.profile{
+    margin: 100px auto;
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.profile h2{
+    font-size: 50px;
+    margin-bottom: 60px;
+}
+
+.ul-profile{
+    text-decoration: none;
+}
+
+.ul-profile li{
+    margin: 10px auto;
+}
+
+.icon-camera{
+    font-size: 40px;
+    margin-top: -50px;
+    margin-right: -250px;
+    cursor: pointer;
+}
+

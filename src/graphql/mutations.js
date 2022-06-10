@@ -75,31 +75,7 @@ export const newScore = /* GraphQL */ `
 `;
 export const updateProfile = /* GraphQL */ `
   mutation UpdateProfile($image: String, $userId: ID!) {
-    updateProfile(image: $image, userId: $userId) {
-      id
-      name
-      surname
-      email
-      username
-      password
-      scores {
-        items {
-          id
-          game
-          score
-          date
-          createdAt
-          updatedAt
-          owner
-          userGameScoresId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-      image
-    }
+    updateProfile(image: $image, userId: $userId)
   }
 `;
 export const createUserGame = /* GraphQL */ `
