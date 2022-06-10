@@ -21,20 +21,21 @@ function Navbar() {
             <li>Home</li>
           </Link>
           {!userLogged == "" ? (
-            <Link className="links" to={RoutesLogin.choice}>
-              <li>Profilo personale</li>
+            <>
+            <Link className="links" to={RoutesLogin.choices}>
+              <li>Games</li>
             </Link>
+          <Link className="links" to={RoutesLogin.about}>
+            <li>Profilo personale</li>
+            </Link>
+            </>
           ) : (
             <Link className="links" to={RoutesLogin.authPage}>
               <li>Accedi</li>
             </Link>
           )}
-
-          <Link className="links" to={RoutesLogin.about}>
-            <li>About</li>
-          </Link>
-          <Link className="links" to={RoutesLogin.games}>
-            <li>Games</li>
+          <Link className="links" to={RoutesLogin.scores}>
+            <li>Score</li>
           </Link>
         </ul>
       </div>

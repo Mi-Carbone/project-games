@@ -6,9 +6,9 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { RoutesLogin } from "../Routes";
 
-const cardImages = "/img/image-avatar.png";
+// const cardImages = "/img/image-avatar.png";
 
-function Games() {
+function Scores() {
   // const [items, setItems] = useState(
   //   JSON.parse(localStorage.getItem("sidebarUsername"))
   // );
@@ -18,17 +18,9 @@ function Games() {
   const [listItems, setListItems] = useState([]);
   const [listItemsMine, setListItemsMine] = useState([]);
   const navigate = useNavigate();
-  const handleClick = () => {
-    //console.log(items, "array salvati");
-    // const myNewItems = [];
-    // if (items.scoresMemory) {
-    //   myNewItems.push(items.scoresMemory);
-    // console.log("nuovo array", myNewItems);
-    // setListItems(myNewItems);
-    // }else{
-    //   setMsgMemory('Non ci sono dati salvati')
-    // }
 
+
+  const handleClick = () => {
     userScoreGame("Memory")
       .then((data) => {
         console.log("result: ", data);
@@ -43,15 +35,6 @@ function Games() {
   };
 
   const handleClickMine = () => {
-    // const myNewItemsMine = [];
-    // if (items.scoreMine) {
-    //   myNewItemsMine.push(items.scoreMine);
-    //   console.log("nuovo array", myNewItemsMine);
-    //   setListItemsMine(myNewItemsMine);
-    // } else {
-    //   setMsgMinefield("Non ci sono dati salvati");
-    // }
-
     userScoreGame("Minefield")
       .then((data) => {
         console.log("result: ", data);
@@ -77,33 +60,14 @@ function Games() {
     });
   }
 
-  function updateUserImage() {
-    const nameImage = JSON.parse(localStorage.getItem("sidebarUsername")).name + '.image'
-    return API.graphql({
-      query: getS3url,
-      variables: {
-        name: nameImage
-      },
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-    });
-  }
   const handlChangeImage = () =>{
-    updateUserImage()
-    .then((data) => {
-      console.log("result: ", data);
-      
-    })
-    .catch((err) => {
-      console.log("error: ", err);
-    });
     navigate(RoutesLogin.changeImage)
   }
-
 
   return (
     <>
       <div className="contact">
-        <img src={cardImages} alt="" />
+        {/* <img src={cardImages} alt="" /> */}
         <button className="contact-button" onClick={handlChangeImage}>
           Cambia immagine
         </button>
@@ -140,17 +104,17 @@ function Games() {
   );
 }
 
-export default Games;
+export default Scores;
 
-{
-  /**
- /*
-  const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const myNewItem = { id, checked: false, item };
-    const listItems = [...items, myNewItem];
-    setAndSaveItems(listItems);
- */
-}
+// {
+//   /**
+//  /*
+//   const id = items.length ? items[items.length - 1].id + 1 : 1;
+//     const myNewItem = { id, checked: false, item };
+//     const listItems = [...items, myNewItem];
+//     setAndSaveItems(listItems);
+//  */
+// }
 
 // if (!gameOver) {
 //   score.push({score:turns})

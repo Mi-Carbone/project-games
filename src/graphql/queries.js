@@ -60,8 +60,37 @@ export const userScores = /* GraphQL */ `
   }
 `;
 export const getS3url = /* GraphQL */ `
-  query GetS3url($file: String) {
+  query GetS3url($file: String!) {
     getS3url(file: $file)
+  }
+`;
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      name
+      surname
+      email
+      username
+      password
+      scores {
+        items {
+          id
+          game
+          score
+          date
+          createdAt
+          updatedAt
+          owner
+          userGameScoresId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+      image
+    }
   }
 `;
 export const getUserGame = /* GraphQL */ `

@@ -4,7 +4,7 @@ import { RoutesLogin } from "../Routes/index";
 import { Auth } from "aws-amplify";
 
 
-function ChoiceGame() {
+function ChoiceGames() {
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate(RoutesLogin.authPage);
@@ -48,4 +48,4 @@ function ChoiceGame() {
   );
 }
 
-export default ChoiceGame;
+export default ChoiceGames;

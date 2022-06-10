@@ -161,3 +161,62 @@ function PublicPage() {
 function ProtectedPage() {
   return <h3>Protected</h3>;
 }
+
+
+
+
+
+
+
+
+
+
+
+  // async function onChange(e) {
+  //   const file = e.target.files[0];
+  //   try {
+  //     const img = await Storage.put(file.name, file, {
+  //       contentType: "image/png", // contentType is optional
+  //     });
+      
+  //     console.log("passato", img);
+
+  //     const id = localStorage.getItem("userId");
+  //     console.log(img.key,'boh');
+  //  return API.graphql({
+  //     query: updateProfile,
+  //     variables: {
+  //       image: img.key,
+  //       userId: id,
+  //     },
+  //     authMode: "AMAZON_COGNITO_USER_POOLS",
+      
+  //   });
+    
+  //   } catch (error) {
+  //     console.log("Error uploading file: ", error);
+  //   }
+  // }
+
+  function UploadImage() {
+    const id = localStorage.getItem("userId");
+    return API.graphql({
+      query: updateProfile,
+      variables: {
+        image: image,
+        userId: id,
+      },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    });
+  }
+
+  const handleUploadImage = () => {
+    console.log(image,'funzione');
+    image
+      .then((data) => {
+        console.log("data img", data);
+      })
+      .catch((err) => {
+        console.log(err, "errore");
+      });
+  };

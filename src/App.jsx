@@ -2,12 +2,12 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import "./App.css";
 
-import Games from "./Pages/Games";
+import Scores from "./Pages/Scores";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Navbar from "./components/Navbar";
 import Memory from "./navUser/Memory/Memory";
-import ChoiceGame from "./navUser/ChoiceGame";
+import ChoiceGames from "./navUser/ChoiceGames";
 import AuthPage from "./Pages/AuthPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RoutesLogin } from "./Routes/index";
@@ -34,8 +34,8 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path={RoutesLogin.home} element={<Home />} />
             <Route path={RoutesLogin.about} element={<About />} />
-            <Route path={RoutesLogin.games} element={<Games />} />
-            <Route path={RoutesLogin.choice} element={<ChoiceGame />} />
+            <Route path={RoutesLogin.scores} element={<Scores />} />
+            <Route path={RoutesLogin.choices} element={<ChoiceGames />} />
             <Route path={RoutesLogin.memory} element={<Memory />} />
             <Route path={RoutesLogin.minefield} element={<Minefield />} />
             <Route path={RoutesLogin.changeImage} element={<ChangeImage />} />
