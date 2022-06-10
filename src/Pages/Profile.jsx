@@ -32,35 +32,37 @@ function Profile() {
 
   return (
     <>
-      <div className="personal-profile">
-        <div
-          style={{
-            width: "25%",
-            margin: "50px 100px",
-          }}
-        >
-          <div className="ct-main-circular-image">
-            <div
-              className="ct-main-circular-image-child"
-              style={{
-                backgroundImage: "url(" + user.image + ")",
-                backgroundPosition: "center center",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-              }}
-            ></div>
-            <span onClick={handlChangeImage}>
-              <FaCamera className="icon-camera" />
-            </span>
+      <div className="form">
+        <div className="personal-profile">
+          <div
+            style={{
+              width: "25%",
+              margin: "50px 100px",
+            }}
+          >
+            <div className="ct-main-circular-image">
+              <div
+                className="ct-main-circular-image-child"
+                style={{
+                  backgroundImage: "url(" + user.image + ")",
+                  backgroundPosition: "center center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              ></div>
+              <span onClick={handlChangeImage}>
+                <FaCamera className="icon-camera" />
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="profile">
-          <h2>Welcome: {user.username}</h2>
-          <ul className="ul-profile">
-            <li>Name: {user.name}</li>
-            <li>Surname: {user.surname}</li>
-            <li>Email: {user.email}</li>
-          </ul>
+          <div className="profile">
+            <h2>Welcome: {user.username}</h2>
+            <ul className="ul-profile">
+              <li>Name: {user.name}</li>
+              <li>Surname: {user.surname}</li>
+              <li>Email: {user.email}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </>

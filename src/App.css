@@ -56,6 +56,8 @@ html {
 
 .homepage {
   text-align: center;
+  background-color: rgb(13, 45, 154);
+  height: calc(100vh - 10vh);
 }
 
 .links {

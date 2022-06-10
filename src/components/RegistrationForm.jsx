@@ -15,6 +15,7 @@ const RegistrationForm = () => {
   const [verifyPassword, setVerifyPassword] = useState("");
   const [CheckForm, setCheckForm] = useState(false);
   const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
   const [userScore, setUserScore] = useState({
     name: "",
     scoresMine: [],
@@ -39,6 +40,7 @@ const RegistrationForm = () => {
 
   //cattura evento del click per la gestione dei dati in entrata
   const handleClick = (event) => {
+    
     event.preventDefault();
     console.log(event, "event");
     //verifica del campo vuoto
@@ -126,6 +128,7 @@ const RegistrationForm = () => {
 
   //funzione per la gestione del codice di verifica OTP
   const confirm = async () => {
+    setLoading(true)
     //Controllo sul numero dei caratteri che devono essere soltanto 6
     if (code.length !== 6 || code === "") {
       alert("Il codice da inserire deve essere di almeno 6 caratteri");
@@ -169,6 +172,18 @@ const RegistrationForm = () => {
       }
     });
   };
+
+
+
+  if (loading) {
+    return (
+      <>
+        <div className="form">
+          <div className="spinner"></div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

@@ -62,7 +62,8 @@ function Scores() {
 
   return (
     <>
-      <div className="contact">
+    <div className="contact">
+      <div>
         <h1>Punteggio Memory</h1>
         <button className="contact-button" onClick={handleClick}>
           Aggiorna Punteggio
@@ -77,7 +78,7 @@ function Scores() {
           </ul>
         ))}
       </div>
-      <div className="contact">
+      <div>
         <h1>Punteggio Campo Minato</h1>
         <button className="contact-button" onClick={handleClickMine}>
           Aggiorna Punteggio
@@ -92,6 +93,8 @@ function Scores() {
           </ul>
         ))}
       </div>
+
+    </div>
     </>
   );
 }

@@ -5,9 +5,11 @@ import { RoutesLogin } from "../Routes/index";
 function ChoiceGames() {
   return (
     <>
-      <div className="welcome">
-        <div className="body-choice">
+        <div className="form">
+    <div className="form-login">
+    <div className="form-inner">
           <h3>SELEZIONA IL GIOCO</h3>
+          <div className="welcome">
           <div className="choice-button">
             <ul>
               <li>
@@ -26,8 +28,12 @@ function ChoiceGames() {
               </li>
             </ul>
           </div>
+
+          </div>
         </div>
       </div>
+    </div>
+    
     </>
   );
 }

@@ -12,6 +12,7 @@ const LoginUser = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(false);
   const [userScore, setUserScore] = useState({
     name: "",
     scoresMine: [],
@@ -38,6 +39,7 @@ const LoginUser = () => {
     }
   };
   const handleClick = async (event) => {
+    setLoading(true)
     if (username === "" || password === "") {
       alert("Compile all the fields");
     } else {
@@ -80,6 +82,18 @@ const LoginUser = () => {
   const handleClickForgotPass = () => {
     navigate(RoutesLogin.forgotPass);
   }
+
+  if (loading) {
+    return (
+      <>
+        <div className="form">
+          <div className="spinner"></div>
+        </div>
+      </>
+    );
+  }
+
+
   return (
     <div>
       <form className="form-login">

@@ -2,24 +2,17 @@ import React from "react";
 import "../style/form/form.css";
 import LoginUser from "../components/LoginForm";
 
-
 function AuthPage() {
-
   return (
     <>
-      <div className="form"> 
-          <LoginUser />
+      <div className="form">
+        <LoginUser />
       </div>
     </>
   );
 }
 
 export default AuthPage;
-
-
-
-
-
 
 /*
 TUTTO QUESTO SENZA IL COLLEGAMENTO CON IL BACK DI LUCA
