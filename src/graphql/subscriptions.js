@@ -1,6 +1,46 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateScores = /* GraphQL */ `
+  subscription OnCreateScores {
+    onCreateScores {
+      id
+      game
+      score
+      date
+      userId {
+        id
+        name
+        surname
+        email
+        username
+        password
+        scores {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+        image
+      }
+      createdAt
+      updatedAt
+      owner
+      userGameScoresId
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage {
+    onCreateMessage {
+      id
+      owner
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUserGame = /* GraphQL */ `
   subscription OnCreateUserGame($owner: String) {
     onCreateUserGame(owner: $owner) {
@@ -85,93 +125,6 @@ export const onDeleteUserGame = /* GraphQL */ `
       updatedAt
       owner
       image
-    }
-  }
-`;
-export const onCreateScores = /* GraphQL */ `
-  subscription OnCreateScores($owner: String) {
-    onCreateScores(owner: $owner) {
-      id
-      game
-      score
-      date
-      userId {
-        id
-        name
-        surname
-        email
-        username
-        password
-        scores {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-        image
-      }
-      createdAt
-      updatedAt
-      owner
-      userGameScoresId
-    }
-  }
-`;
-export const onUpdateScores = /* GraphQL */ `
-  subscription OnUpdateScores($owner: String) {
-    onUpdateScores(owner: $owner) {
-      id
-      game
-      score
-      date
-      userId {
-        id
-        name
-        surname
-        email
-        username
-        password
-        scores {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-        image
-      }
-      createdAt
-      updatedAt
-      owner
-      userGameScoresId
-    }
-  }
-`;
-export const onDeleteScores = /* GraphQL */ `
-  subscription OnDeleteScores($owner: String) {
-    onDeleteScores(owner: $owner) {
-      id
-      game
-      score
-      date
-      userId {
-        id
-        name
-        surname
-        email
-        username
-        password
-        scores {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-        image
-      }
-      createdAt
-      updatedAt
-      owner
-      userGameScoresId
     }
   }
 `;

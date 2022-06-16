@@ -14,6 +14,7 @@ function Profile() {
   useEffect(() => {
     API.graphql({
       query: getUser,
+      authMode: "AMAZON_COGNITO_USER_POOLS",
       variables: {
         id: id,
       },
