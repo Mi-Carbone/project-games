@@ -27,6 +27,7 @@ function Profile() {
       });
   }, []);
 
+  console.log(user.image,'user');
   const handlChangeImage = () => {
     navigate(RoutesLogin.changeImage);
   };

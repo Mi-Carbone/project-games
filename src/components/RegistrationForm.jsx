@@ -20,6 +20,7 @@ const RegistrationForm = () => {
     name: "",
     scoresMine: [],
     scoresMemory: [],
+    chat: []
   });
   
   const handleChange = (event) => {
@@ -143,6 +144,7 @@ const RegistrationForm = () => {
             name: data.username.toLowerCase(),
             scoresMine: [],
             scoresMemory: [],
+            chat: []
           });
           userScore.name = data.username;
           localStorage.setItem("sidebarUsername", JSON.stringify(userScore));

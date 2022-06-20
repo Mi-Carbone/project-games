@@ -17,6 +17,7 @@ const LoginUser = () => {
     name: "",
     scoresMine: [],
     scoresMemory: [],
+    chat:[]
   });
 
  

@@ -220,3 +220,165 @@ function ProtectedPage() {
         console.log(err, "errore");
       });
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //useEffet chiamata ListMessage per tutti i messaggi salvati
+  useEffect(() => {
+    //const token = localStorage.getItem("token");
+    API.graphql({
+      query: listMessages,
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })
+      .then((data) => {
+        //console.log(data.data.listMessages.items, "data listMessages");
+        setListSubMessage(data.data.listMessages.items);
+        //console.log(listSubMessage, "DOPPIO ARRAY");
+        //meChat.push(listSubMessage[0]);
+      })
+      .catch((err) => {
+        console.log(err, "err");
+      });
+  }, []);
+
+
+  listSubMessage.sort(function (a, b) {
+    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+    return dateB - dateA
+  });
+  
+  //console.log(array) //array is now sorted by date
+  console.log(listSubMessage, "ARRAY dopo");
+
+
+  //funzione che richiama la mutation createMessage
+  function newCreateMessage() {
+    return API.graphql({
+      query: newMessage,
+      variables: {
+        message: message,
+      },
+    });
+  }
+
+  // funzione input
+  const handleChange = (event) => {
+    event.preventDefault();
+    if (event.target.name === "chat") {
+      setMessage(event.target.value);
+    }
+  };
+
+  const handleClick = () => {
+    if (message === "") {
+      return;
+    } else {
+      newCreateMessage()
+        .then((data) => {
+          console.log(data, "data ");
+          listSubMessage.push(data);
+
+          setMessage("");
+
+          //window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err, "err");
+        });
+    }
+  };
+
+  //funzione che richiama la subscription
+  API.graphql(
+    graphqlOperation(onCreateMessage, {
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })
+  ).subscribe({
+    next: (rest) => {
+      console.log(rest.value.data.onCreateMessage, "data sub");
+      setListCreateChat(rest.value.data.onCreateMessage);
+      listSubMessage.push(listCreateChat);
+      // const res = rest.value.data.onCreateMessage;
+      // setMeChat(res);
+      // const arrMesage = [];
+      // arrMesage.push(res);
+      // setListSubMessage(arrMesage);
+      // for (let index = 0; index < arrMesage.length; index++) {
+      //   const res = [];
+      //   const element = arrMesage[index];
+      //   res.push({
+      //     ...element,
+      //     userFirst: userChatFirst,
+      //     userSecond: userChatSecond,
+      //   });
+      //   console.log(res[0], "ELEMENT");
+      //   setUserSubMsg(res[0].message);
+      //   setUserSubFirst(res[0].userFirst);
+      //   setUserSubSecond(res[0].userSecond);
+      //   setUserSubId(res[0].id);
+      //   setUserSubDate(res[0].updatedAt);
+      //   setUserSubOwner(res[0].owner);
+      //   setMeChat(res);
+      // }
+    },
+  });
+  // console.log(chatMessages, "chatMessages");
+  // useEffect(() => {
+  //   setAccess(true)
+  //   if (access === true) {
+  //     newRecord();
+  //   }
+  // }, [meChat]);
+  // //localStorage.setItem("userChat", JSON.stringify(meChat));
+  // function newRecord() {
+  //   var existing = localStorage.getItem("sidebarUsername");
+  //   existing = existing ? JSON.parse(existing) : {};
+  //   console.log(existing, "existing");
+  //   //controllo Array
+  //   if (!existing) {
+  //     existing.chat = [];
+  //     console.log(existing.chat, "existing.chat");
+  //   }
+  //   //push elementi
+  //   existing.chat.push({
+  //     id: userSubId,
+  //     message: userSubMsg,
+  //     owner: userSubOwner,
+  //     updatedAt: userSubDate,
+  //     userFirst: userSubFirst,
+  //     userSecond: userSubSecond,
+  //   });
+  //   localStorage.setItem("sidebarUsername", JSON.stringify(existing));
+  // }
+  // const handleClickFirst = () => {
+  //   setUserChatSecond(false);
+  //   setUserChatFirst(true);
+  // };
+
+  // const handleClickSecond = () => {
+  //   setUserChatFirst(false);
+  //   setUserChatSecond(true);
+  // };
+  

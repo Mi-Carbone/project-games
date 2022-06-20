@@ -27,9 +27,13 @@ body{
 
 
 /** Chat section **/
-/* .bg-chat-image{
-    background-image: url(../assets/img/mine.jpg);
-} */
+.bg-chat-image{
+    background-image: url(../../public/img/bacground.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-weight: 800;
+}
 
 
 #chat header,

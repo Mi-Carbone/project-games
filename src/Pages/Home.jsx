@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { Table } from "react-bootstrap";
-import moment from "moment";
+import { Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import "../style/chat.css";
 import { listMessages } from "../graphql/queries";
 import { newMessage } from "../graphql/mutations";
 import { onCreateMessage } from "../graphql/subscriptions";
-
-
-
+import moment from "moment";
 
 function App() {
   const [message, setMessage] = useState("");
-  const [createSubMsg, setCreateSubMsg] = useState([]);
-  const [listCreateChat, setListCreateChat] = useState('');
-  const [userChatFirst, setUserChatFirst] = useState(null);
-  const [userChatSecond, setUserChatSecond] = useState(null);
-  const imagesUser = [
-    { src: "/img/anime7-1.png", first: false },
-    { src: "/img/image-avatar.png", second: false },
-  ];
-  let listmessages = [];
-  
+  const [listSubMessage, setListSubMessage] = useState([]);
+  const [listCreateChat, setListCreateChat] = useState("");
+  const [userName, setUserName] = useState(JSON.parse(localStorage.getItem("sidebarUsername")))
   //useEffet chiamata ListMessage per tutti i messaggi salvati
   useEffect(() => {
     //const token = localStorage.getItem("token");
@@ -30,13 +21,22 @@ function App() {
       authMode: "AMAZON_COGNITO_USER_POOLS",
     })
       .then((data) => {
-        //console.log(data, 'data listMessages');
-        listmessages.push(data);
+        console.log(data.data.listMessages.items, "data listMessages");
+        setListSubMessage(data.data.listMessages.items);
+        //console.log(listSubMessage, "DOPPIo");
       })
       .catch((err) => {
         console.log(err, "err");
       });
   }, []);
+  // console.log(listSubMessage, "DOPPIO ARRAY");
+  //console.log(meChat, "meChat");
+
+  listSubMessage.sort(function (a, b) {
+    var dateA = new Date(a.createdAt),
+      dateB = new Date(b.createdAt);
+    return dateA - dateB;
+  });
 
   //funzione che richiama la mutation createMessage
   function newCreateMessage() {
@@ -50,7 +50,7 @@ function App() {
 
   // funzione input
   const handleChange = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (event.target.name === "chat") {
       setMessage(event.target.value);
     }
@@ -62,10 +62,9 @@ function App() {
     } else {
       newCreateMessage()
         .then((data) => {
-          console.log(data, "data ");
-          listmessages.push(data);
-          setMessage('')
-          // window.location.reload();
+          console.log(data.data.newMessage, "data nuovo messaggio");
+          listSubMessage.push(data.data.newMessage);
+          setMessage("");
         })
         .catch((err) => {
           console.log(err, "err");
@@ -73,33 +72,18 @@ function App() {
     }
   };
 
-//funzione che richiama la subscription
-    API.graphql(
-      graphqlOperation(onCreateMessage, {
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-      })
-    ).subscribe({
-      next: (rest) => {
-        console.log(rest, "data sub");
-        setListCreateChat(rest.value.data.onCreateMessage);
-        listmessages.push(listCreateChat)
-      },
-    });
+  //funzione che richiama la subscription
+  API.graphql(
+    graphqlOperation(onCreateMessage, {
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })
+  ).subscribe({
+    next: (rest) => {
+      console.log(rest.value.data.onCreateMessage, "data sub");
+      setListCreateChat(rest.value.data.onCreateMessage);
+    },
+  });
 
-
-  console.log(listmessages, "listmessages");
-
-  const handleClickFirst = () =>{
-    setUserChatSecond(false)
-    setUserChatFirst(true)
-    
-  }
-  console.log(userChatSecond, 'userChatSecond');
-  console.log(userChatFirst, 'userChatFirst');
-  const handleClickSecond = () =>{
-    setUserChatFirst(false)
-    setUserChatSecond(true)
-  }
   return (
     <>
       <div
@@ -110,22 +94,28 @@ function App() {
           <div className="row h-100">
             <section
               id="contacts"
-              className="col-4 bg-gray h-100 p-0 d-flex flex-column"
+              className="col-4 bg-dark h-100 p-0 d-flex flex-column"
             >
-              <section className="user-section flex-shrink-0 d-flex justify-content-between">
+              <section className="user-section flex-shrink-0 d-flex justify-content-between text-white">
                 <div className="user-name">
-                  <figure>
-                    <img />
-                  </figure>
+                  <div className="user-name-icon flex-shrink-0">
+                    {/* <i className="fas fa-bell-slash"></i> */}
+                    <img src="/img/anime7-1.png" alt="" />
+                  </div>
+                  <div className="user-name-text">
+                    <div className="fs-3 clickable"
+                    style={{
+                      margin: "0px 20px",
+                      fontWeight: 800
+                    }}>
+                      {userName.name}
+                    </div>
+                  </div>
 
                   <div className="h6 user-name-text">{}</div>
                 </div>
 
-                <div className="w-25 text-muted d-flex justify-content-around align-items-center">
-                  {/* <i className="fas fa-circle-notch clickable"></i>
-                  <i className="fas fa-comment-alt clickable"></i>
-                  <i className="fas fa-ellipsis-v clickable"></i> */}
-                </div>
+                <div className="w-25 text-muted d-flex justify-content-around align-items-center"></div>
               </section>
 
               <section className="notifications flex-shrink-0">
@@ -155,45 +145,39 @@ function App() {
               <section className="flex-grow-1 overflow-auto bg-white">
                 <ul className="m-0 p-0">
                   <li>
-                    {/* <figure>
-                      <img />
-                    </figure> */}
                     <section className="notifications flex-shrink-0">
-                <div className="user-name">
-                  <div className="user-name-icon flex-shrink-0">
-                    {/* <i className="fas fa-bell-slash"></i> */}
-                    <img src="/img/anime7-1.png" alt="" />
-                  </div>
+                      <div className="user-name">
+                        <div className="user-name-icon flex-shrink-0">
+                          {/* <i className="fas fa-bell-slash"></i> */}
+                          <img src="/img/anime7-1.png" alt="" />
+                        </div>
 
-                  <div className="user-name-text">
-                    <div className="fs-6 clickable text-decoration-underline">
-                     Utente A
-                    </div>
-                  </div>
-                </div>
-              </section>
+                        <div className="user-name-text">
+                          <div className="fs-6 clickable text-decoration-underline">
+                            Utente A
+                          </div>
+                        </div>
+                      </div>
+                    </section>
                     <div className="h6 user-name-text">
                       <div>{}</div>
                     </div>
                   </li>
                   <li>
-                    {/* <figure>
-                      <img />
-                    </figure> */}
                     <section className="notifications flex-shrink-0">
-                <div className="user-name">
-                  <div className="user-name-icon flex-shrink-0">
-                    {/* <i className="fas fa-bell-slash"></i> */}
-                    <img src="/img/image-avatar.png" alt="" />
-                  </div>
+                      <div className="user-name">
+                        <div className="user-name-icon flex-shrink-0">
+                          {/* <i className="fas fa-bell-slash"></i> */}
+                          <img src="/img/image-avatar.png" alt="" />
+                        </div>
 
-                  <div className="user-name-text">
-                    <div className="fs-6 clickable text-decoration-underline">
-                     Utente B
-                    </div>
-                  </div>
-                </div>
-              </section>
+                        <div className="user-name-text">
+                          <div className="fs-6 clickable text-decoration-underline">
+                            Utente B
+                          </div>
+                        </div>
+                      </div>
+                    </section>
                     <div className="h6 user-name-text">
                       <div>{}</div>
                     </div>
@@ -204,45 +188,62 @@ function App() {
 
             <section
               id="chat"
-              className="col-8 rounded-end d-flex flex-column bg-chat p-0 h-100"
+              className="bg-chat-image col-8 rounded-end d-flex flex-column bg-chat p-0 h-100"
             >
-              <header className="bg-gray flex-shrink-0 d-flex justify-content-between">
-                <div className="user-name">
-                  {/* <figure>
-                    <img />
-                  </figure>
-                  <div className="h6 user-name-text">
-                    <div>{}</div>
-                    <div className="user-name-secondary-text fw-light">
-                      <small>Ultimo accesso oggi alle {}</small>
-                    </div>
-                  </div> */}
-                </div>
-                <div className="me-3 d-flex text-muted align-items-center justify-content-around">
-                  {/* <i className="fas fa-search ms-3 clickable"></i>
-                  <i className="fas fa-paperclip ms-3 clickable"></i>
-                  <i className="fas fa-ellipsis-v ms-3 clickable"></i> */}
-                </div>
+              <header className="flex-shrink-0 d-flex justify-content-between">
+                <div className="user-name"></div>
+                <div className="me-3 d-flex text-muted align-items-center justify-content-around"></div>
               </header>
 
-              <main className="flex-grow-1 overflow-auto bg-chat-image">
-                <ul>
-                  <li className="message-container p-3 sent">
+              <main className="flex-grow-1 overflow-auto">
+                <Row
+                  style={{
+                    margin: "0px 2px",
+                  }}
+                >
+                  <Col></Col>
+                  <Col md="auto"></Col>
+                  <Col>
+                    {listSubMessage.map((item, i) => (
+                      <ul
+                        className="bg-success rounded-3 text-white d-flex align-items-start flex-column p-3"
+                        key={"arr" + i}
+                      >
+                        <li className="bg-success text-white text-start">
+                          {item.message}
+                          <br />
+                          <time>
+                            {moment(item.createdAt).format(
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )}
+                          </time>
+                        </li>
+                      </ul>
+                    ))}
+                  </Col>
+                </Row>
+
+                {/* <li className="message-container p-3 sent">
                     <div className="message p-2 rounded-3">
-                      <p>{listCreateChat.message}</p>
-                      <time>{}</time>
-                    </div>
-                  </li>
-                  
-                </ul>
+                      <ul>
+                {listSubMessage.map((items, i) => (
+                          <ul className="d-flex align-items-end flex-column p-3" key={"arr" + i}>
+                            {items.map((element, q) => (
+                              <li className="message p-2 rounded-3" key={"arr" + q}>
+                                {element.message}
+                                <time>{}</time>
+                              </li>
+                            ))}
+                          </ul>
+                        ))} */}
               </main>
 
               <footer className="flex-shrink-0 container-fluid">
                 <div className="row h-100 align-items-center">
                   <div className="col-1">
                     {/* <i className="far fa-smile fa-2x text-muted clickable"></i> */}
-                    <button onClick={handleClickFirst}>A</button>
-                    <button onClick={handleClickSecond}>B</button>
+                    <button>A</button>
+                    <button>B</button>
                   </div>
                   <div className="col-10">
                     <input
@@ -270,44 +271,67 @@ function App() {
 
 export default App;
 
+// handleClick
+//listSubMessage.push(listCreateChat);
+// const res = rest.value.data.onCreateMessage;
+// setMeChat(res);
+// const arrMesage = [];
+// arrMesage.push(res);
+// setListSubMessage(arrMesage);
+// for (let index = 0; index < arrMesage.length; index++) {
+//   const res = [];
+//   const element = arrMesage[index];
+//   res.push({
+//     ...element,
+//     userFirst: userChatFirst,
+//     userSecond: userChatSecond,
+//   });
+//   console.log(res[0], "ELEMENT");
+//   setUserSubMsg(res[0].message);
+//   setUserSubFirst(res[0].userFirst);
+//   setUserSubSecond(res[0].userSecond);
+//   setUserSubId(res[0].id);
+//   setUserSubDate(res[0].updatedAt);
+//   setUserSubOwner(res[0].owner);
+//   setMeChat(res);
+// }
 
+// useEffect(() => {
+//   setAccess(true)
+//   if (access === true) {
+//     newRecord();
+//   }
+// }, [meChat]);
+// //localStorage.setItem("userChat", JSON.stringify(meChat));
+// function newRecord() {
+//   var existing = localStorage.getItem("sidebarUsername");
+//   existing = existing ? JSON.parse(existing) : {};
+//   console.log(existing, "existing");
+//   //controllo Array
+//   if (!existing) {
+//     existing.chat = [];
+//     console.log(existing.chat, "existing.chat");
+//   }
+//   //push elementi
+//   existing.chat.push({
+//     id: userSubId,
+//     message: userSubMsg,
+//     owner: userSubOwner,
+//     updatedAt: userSubDate,
+//     userFirst: userSubFirst,
+//     userSecond: userSubSecond,
+//   });
+//   localStorage.setItem("sidebarUsername", JSON.stringify(existing));
+// }
+// const handleClickFirst = () => {
+//   setUserChatSecond(false);
+//   setUserChatFirst(true);
+// };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// const handleClickSecond = () => {
+//   setUserChatFirst(false);
+//   setUserChatSecond(true);
+// };
 
 // useEffect(() => {
 //   const subscription = API.graphql(
